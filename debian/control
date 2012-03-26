@@ -33,7 +33,7 @@ Multi-Arch: same
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libchewing3-data (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
-Conflicts: scim-chewing (<< 0.3.3)
+Breaks: scim-chewing (<< 0.3.3)
 Description: intelligent phonetic input method library
  libchewing is an intelligent phonetic input method library for Chinese.
  .
@@ -48,7 +48,7 @@ Description: intelligent phonetic input method library
 
 Package: libchewing3-data
 Provides: libchewing-data
-Conflicts: libchewing-data (<= 0.2.7)
+Breaks: libchewing-data (<= 0.2.7)
 Section: misc
 Multi-Arch: same
 Architecture: any
