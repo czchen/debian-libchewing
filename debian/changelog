@@ -5,6 +5,7 @@ libchewing (0.3.3-2~exp) experimental; urgency=low
     - Remove "Multi-arch: forigen" from libchewing3-data.
   * Bump standard version to 3.9.3.
   * Add new debug package: libchewing3-dbg.
+  * use --with autoreconf instead of --with autotools_dev.
 
  -- YunQiang Su <wzssyqa@gmail.com>  Mon, 26 Mar 2012 20:05:57 +0800
 
