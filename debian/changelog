@@ -1,4 +1,4 @@
-libchewing (0.3.3-1.1) unstable; urgency=low
+libchewing (0.3.3-1.1~exp) experimental; urgency=low
 
   * nmu to fix multiarch bugs.
     - Install data files to usr/lib, as they are arch depend.
