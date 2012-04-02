@@ -2,7 +2,8 @@ Source: libchewing
 Section: libs
 Priority: optional
 Maintainer: IME Packaging Team <pkg-ime-devel@lists.alioth.debian.org>
-Uploaders: Kan-Ru Chen <koster@debian.org>, Andrew Lee (李健秋) <ajqlee@debian.org>
+Uploaders: Kan-Ru Chen <koster@debian.org>, Andrew Lee (李健秋) <ajqlee@debian.org>, 
+           YunQiang Su <wzssyqa@gmail.com>
 Build-Depends: debhelper (>= 9), gcc (>= 3:3.3), libtool (>= 1.5.6), autotools-dev, dh-autoreconf,
                 check, doxygen, graphviz, libncursesw5-dev, pkg-config
 Standards-Version: 3.9.3

@@ -1,3 +1,12 @@
+libchewing (0.3.3-2) unstable; urgency=low
+
+  * Team upload to unstable; add YunQiang Su to uploaders.
+  * install chewing.py to package libchewing3 (Closes: #513773).
+  * patch include/config.h.in
+    to define PATH_MAX if not defined (Closes: #666706).
+
+ -- YunQiang Su <wzssyqa@gmail.com>  Mon, 02 Apr 2012 13:58:10 +0800
+
 libchewing (0.3.3-2~exp) experimental; urgency=low
 
   * Team upload to fix multiarch bugs.
