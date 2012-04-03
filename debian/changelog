@@ -1,3 +1,11 @@
+libchewing (0.3.3-3) unstable; urgency=low
+
+  * PATH_MAX patch to src/porting_layer/include/sys/plat_posix.h,
+    instead of include/config.h.in, as not all source files include
+    config.h.
+
+ -- YunQiang Su <wzssyqa@gmail.com>  Tue, 03 Apr 2012 17:16:48 +0800
+
 libchewing (0.3.3-2) unstable; urgency=low
 
   * Team upload to unstable; add YunQiang Su to uploaders.
