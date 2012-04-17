@@ -2,6 +2,8 @@ libchewing (0.3.3-4) unstable; urgency=low
 
   * Remove --enable-debug, it is for developer only.
   * Tidy up with wrap-and-sort.
+  * debian/autoreconf.after: removed.
+  * debian/autoreconf.before: ditto.
 
  --
 
