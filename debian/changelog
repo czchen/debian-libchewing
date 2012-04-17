@@ -1,6 +1,8 @@
 libchewing (0.3.3-4) unstable; urgency=high
 
-  [ Team upload ]
+  * Team upload.
+
+  [ Kan-Ru Chen ]
 
   * Remove --enable-debug, it is for developer only.
     - Set urgency to high because of possible information leakage.
