@@ -1,2 +1,2 @@
-usr/lib/*/lib*.so.*
 python/chewing.py /usr/share/pyshared/
+usr/lib/*/lib*.so.*

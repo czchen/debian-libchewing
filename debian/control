@@ -2,10 +2,19 @@ Source: libchewing
 Section: libs
 Priority: optional
 Maintainer: IME Packaging Team <pkg-ime-devel@lists.alioth.debian.org>
-Uploaders: Kan-Ru Chen <koster@debian.org>, Andrew Lee (李健秋) <ajqlee@debian.org>, 
+Uploaders: Kan-Ru Chen (陳侃如) <koster@debian.org>,
+           Andrew Lee (李健秋) <ajqlee@debian.org>,
            YunQiang Su <wzssyqa@gmail.com>
-Build-Depends: debhelper (>= 9), gcc (>= 3:3.3), libtool (>= 1.5.6), autotools-dev, dh-autoreconf,
-                check, doxygen, graphviz, libncursesw5-dev, pkg-config
+Build-Depends: autotools-dev,
+               check,
+               debhelper (>= 9),
+               dh-autoreconf,
+               doxygen,
+               gcc (>= 3:3.3),
+               graphviz,
+               libncursesw5-dev,
+               libtool (>= 1.5.6),
+               pkg-config
 Standards-Version: 3.9.3
 Homepage: http://chewing.csie.net
 DM-Upload-Allowed: yes
@@ -16,12 +25,12 @@ Package: libchewing3-dev
 Conflicts: libchewing-dev, libchewing1-dev, libchewing2-dev
 Section: libdevel
 Architecture: any
-Depends: libchewing3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: libchewing3 (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: intelligent phonetic input method library (developer version)
  libchewing is an intelligent phonetic input method library for Chinese.
  .
  It provides the core algorithm and logic so that they can be shared among
- the various input methods like JMCCE, xcin-chewing, scim-chewing, 
+ the various input methods like JMCCE, xcin-chewing, scim-chewing,
  iiimf-chewing, screen-chewing, ime-chewing, etc.
  .
  The Chewing input method is a smart bopomofo fonetics input method that
@@ -34,13 +43,15 @@ Provides: libchewing
 Multi-Arch: same
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libchewing3-data (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: libchewing3-data (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
 Breaks: scim-chewing (<< 0.3.3)
 Description: intelligent phonetic input method library
  libchewing is an intelligent phonetic input method library for Chinese.
  .
  It provides the core algorithm and logic so that they can be shared among
- the various input methods like JMCCE, xcin-chewing, scim-chewing, 
+ the various input methods like JMCCE, xcin-chewing, scim-chewing,
  iiimf-chewing, screen-chewing, ime-chewing, etc.
  .
  The Chewing input method is a smart bopomofo fonetics input method that
@@ -55,11 +66,11 @@ Section: misc
 Multi-Arch: same
 Architecture: any
 Depends: ${misc:Depends}
-Description:intelligent phonetic input method library - data files
+Description: intelligent phonetic input method library - data files
  libchewing is an intelligent phonetic input method library for Chinese.
  .
  It provides the core algorithm and logic so that they can be shared among
- the various input methods like JMCCE, xcin-chewing, scim-chewing, 
+ the various input methods like JMCCE, xcin-chewing, scim-chewing,
  iiimf-chewing, screen-chewing, ime-chewing, etc.
  .
  The Chewing input method is a smart bopomofo fonetics input method that
@@ -71,12 +82,12 @@ Package: libchewing3-dbg
 Section: debug
 Priority: extra
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libchewing3 (= ${binary:Version})
-Description:intelligent phonetic input method library - debug files
+Depends: libchewing3 (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: intelligent phonetic input method library - debug files
  libchewing is an intelligent phonetic input method library for Chinese.
  .
  It provides the core algorithm and logic so that they can be shared among
- the various input methods like JMCCE, xcin-chewing, scim-chewing, 
+ the various input methods like JMCCE, xcin-chewing, scim-chewing,
  iiimf-chewing, screen-chewing, ime-chewing, etc.
  .
  The Chewing input method is a smart bopomofo fonetics input method that

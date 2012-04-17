@@ -1,3 +1,9 @@
+libchewing (0.3.3-4) unstable; urgency=low
+
+  * Tidy up with wrap-and-sort.
+
+ --
+
 libchewing (0.3.3-3) unstable; urgency=low
 
   * PATH_MAX patch to src/porting_layer/include/sys/plat_posix.h,
