@@ -1,11 +1,14 @@
-libchewing (0.3.3-4) unstable; urgency=low
+libchewing (0.3.3-4) unstable; urgency=high
+
+  [ Team upload ]
 
   * Remove --enable-debug, it is for developer only.
+    - Set urgency to high because of possible information leakage.
   * Tidy up with wrap-and-sort.
   * debian/autoreconf.after: removed.
   * debian/autoreconf.before: ditto.
 
- --
+ -- Kan-Ru Chen <koster@debian.org>  Tue, 17 Apr 2012 12:17:22 +0800
 
 libchewing (0.3.3-3) unstable; urgency=low
 
