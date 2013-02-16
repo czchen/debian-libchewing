@@ -1,0 +1,26 @@
+Index: libchewing/data/Makefile.in
+===================================================================
+--- libchewing.orig/data/Makefile.in	2013-02-16 11:42:56.028902101 +0800
++++ libchewing/data/Makefile.in	2013-02-16 11:42:56.024902101 +0800
+@@ -496,7 +496,7 @@
+ 		echo "chewing-definition.h exists."; \
+ 	fi
+ 	$(MAKE) gendata && \
+-	touch "timestamp" > $@
++	touch "gendata_stamp" > $@
+ 
+ gendata:
+ 	$(tooldir)/sort_word$(EXEEXT) $(top_srcdir)/data/phone.cin
+Index: libchewing/data/Makefile.am
+===================================================================
+--- libchewing.orig/data/Makefile.am	2013-02-16 11:05:23.228839264 +0800
++++ libchewing/data/Makefile.am	2013-02-16 11:43:22.044902827 +0800
+@@ -43,7 +43,7 @@
+ 		echo "chewing-definition.h exists."; \
+ 	fi
+ 	$(MAKE) gendata && \
+-	touch "timestamp" > $@
++	touch "gendata_stamp" > $@
+ 
+ gendata:
+ 	$(tooldir)/sort_word$(EXEEXT) $(top_srcdir)/data/phone.cin

@@ -1,10 +1,10 @@
 Index: libchewing/src/porting_layer/include/sys/plat_posix.h
 ===================================================================
---- libchewing.orig/src/porting_layer/include/sys/plat_posix.h	2012-03-26 22:48:27.021991254 +0800
-+++ libchewing/src/porting_layer/include/sys/plat_posix.h	2012-04-03 17:06:14.352127987 +0800
-@@ -20,6 +20,11 @@
- #define PLAT_UNLINK(path) \
- 	unlink(path)
+--- libchewing.orig/src/porting_layer/include/sys/plat_posix.h	2013-02-16 11:07:11.884842295 +0800
++++ libchewing/src/porting_layer/include/sys/plat_posix.h	2013-02-16 11:07:11.880842294 +0800
+@@ -35,6 +35,11 @@
+ #define PATH_MAX 4096
+ #endif
  
 +//GNU Hurd doesn't define PATH_MAX
 +#ifndef PATH_MAX

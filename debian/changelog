@@ -1,3 +1,16 @@
+libchewing (0.3.4-1) unstable; urgency=low
+
+  * debian/watch looks for googlecode now
+  * Imported Upstream version 0.3.4
+  * Upstream tarball has no chewing.py:
+    put it under debian/
+  * Autoreconf is not needed now.
+  * /usr/lib/*/chewing3/ renamed to /usr/lib/*/chewing/
+  * Patch to remove stamp under data correctly.
+  * Add symbols for libchewing3.
+
+ -- YunQiang Su <wzssyqa@gmail.com>  Sat, 16 Feb 2013 11:05:28 +0800
+
 libchewing (0.3.3-4) unstable; urgency=high
 
   * Team upload.

@@ -8,14 +8,13 @@ Uploaders: Kan-Ru Chen (陳侃如) <koster@debian.org>,
 Build-Depends: autotools-dev,
                check,
                debhelper (>= 9),
-               dh-autoreconf,
                doxygen,
                gcc (>= 3:3.3),
                graphviz,
                libncursesw5-dev,
                libtool (>= 1.5.6),
                pkg-config
-Standards-Version: 3.9.3
+Standards-Version: 3.9.4
 Homepage: http://chewing.csie.net
 Vcs-Git: git://anonscm.debian.org/pkg-ime/libchewing.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-ime/libchewing.git;a=summary
