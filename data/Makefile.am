@@ -1,7 +1,9 @@
 tooldir = $(top_builddir)/src/tools
 if ENABLE_BINARY_DATA
-chindexs = ch_index_begin.dat \
-		   ch_index_phone.dat
+chindexs = \
+	ch_index_begin.dat \
+	ch_index_phone.dat \
+	$(NULL)
 else
 chindexs = ch_index.dat
 endif
@@ -10,31 +12,44 @@ datas = \
 	dict.dat \
 	ph_index.dat \
 	fonetree.dat \
-	$(chindexs)
+	$(chindexs) \
+	$(NULL)
+static_tables = pinyin.tab swkb.dat symbols.dat
 generated_header = $(top_builddir)/src/chewing-definition.h
 
-all: checkdata_stamp gendata_stamp
+dist_noinst_DATA = \
+	NOTE \
+	phone.cin \
+	phone.cin-CNS11643-complete.patch \
+	svnrev \
+	tsi.src \
+	$(NULL)
 
-checkdata_stamp: phone.cin tsi.src
-	@echo "timestamp" > $@
+chewing_datadir = $(pkglibdir)
+chewing_data_DATA = \
+	$(static_tables) \
+	$(datas) \
+	$(NULL)
 
-gendata_stamp:
-	if test -f $(generated_header); then \
+all: $(datas)
+
+$(datas): gendata_stamp
+
+LOCALE_RESET= \
+export LC_ALL=C
+
+gendata_stamp: phone.cin tsi.src
+	-if test -f $(generated_header); then \
 		echo "chewing-definition.h exists."; \
-	else \
-		$(MAKE) gendata; \
 	fi
-	@echo "timestamp" > $@
+	$(MAKE) gendata && \
+	touch "timestamp" > $@
 
 gendata:
-	$(tooldir)/sort_word
-	$(tooldir)/sort_dic $(top_srcdir)/data/tsi.src
-	$(tooldir)/maketree
+	$(tooldir)/sort_word$(EXEEXT) $(top_srcdir)/data/phone.cin
+	$(shell $(LOCALE_RESET) ; $(tooldir)/sort_dic$(EXEEXT) $(top_srcdir)/data/tsi.src)
+	$(tooldir)/maketree$(EXEEXT)
 	-rm -f phoneid.dic
-	-mv -f chewing-definition.h $(top_builddir)/src/
+	-mv -f chewing-definition.h $(generated_header)
 
-install-data-local: $(datas) pinyin.tab swkb.dat symbols.dat
-	$(mkinstalldirs) $(DESTDIR)/$(datadir)/chewing
-	$(INSTALL_DATA) $(datas) pinyin.tab swkb.dat symbols.dat \
-		$(DESTDIR)/$(datadir)/chewing
-CLEANFILES = $(datas) gendata_stamp checkdata_stamp $(generated_header)
+CLEANFILES = $(datas) gendata_stamp $(generated_header)

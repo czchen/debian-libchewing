@@ -11,7 +11,15 @@
 #ifndef _CHEWING_USERPHRASE_PRIVATE_H
 #define _CHEWING_USERPHRASE_PRIVATE_H
 
-#include "chewing-private.h"
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
+#ifdef HAVE_INTTYPES_H
+#  include <inttypes.h>
+#elif defined HAVE_STDINT_H
+#  include <stdint.h>
+#endif
 
 #define FREQ_INIT_VALUE (1)
 #define SHORT_INCREASE_FREQ (10)
@@ -24,8 +32,11 @@
 #define USER_UPDATE_MODIFY (2)
 #define USER_UPDATE_IGNORE (8)
 
-typedef struct {
-	uint16 *phoneSeq;
+/* Forward declaration */
+struct tag_ChewingData;
+
+typedef struct tag_UserPhraseData {
+	uint16_t *phoneSeq;
 	char *wordSeq;
 	int userfreq;
 	int recentTime;
@@ -44,7 +55,7 @@ typedef struct {
  * @retval USER_UPDATE_INSERT Sequence is new, add new entry.
  * @retval USER_UPDATE_MODIFY Sequence is existing, update it's data.
  */
-int UserUpdatePhrase( const uint16 phoneSeq[], const char wordSeq[] );
+int UserUpdatePhrase( struct tag_ChewingData *pgdata, const uint16_t phoneSeq[], const char wordSeq[] );
 
 /**
  * @brief Read the first phrase of the phone in user phrase database.
@@ -53,7 +64,7 @@ int UserUpdatePhrase( const uint16 phoneSeq[], const char wordSeq[] );
  * 
  * @return UserPhraseData, if it's not existing then return NULL.
  */
-UserPhraseData *UserGetPhraseFirst( const uint16 phoneSeq[] );
+UserPhraseData *UserGetPhraseFirst( struct tag_ChewingData *pgdata, const uint16_t phoneSeq[] );
 
 /**
  * @brief Read the next phrase of the phone in user phrase database.
@@ -62,6 +73,6 @@ UserPhraseData *UserGetPhraseFirst( const uint16 phoneSeq[] );
  *
  * @return UserPhraseData, if it's not existing then return NULL.
  */
-UserPhraseData *UserGetPhraseNext( const uint16 phoneSeq[] );
+UserPhraseData *UserGetPhraseNext( struct tag_ChewingData *pgdata, const uint16_t phoneSeq[] );
 
 #endif

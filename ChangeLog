@@ -1,3 +1,1636 @@
+2012-12-31  Jim Huang <jserv@0xlab.org>
+
+	* configure.ac: Bump version to 0.3.4
+
+2012-12-31  Jim Huang <jserv@0xlab.org>
+
+	* Makefile.am, scripts/ChangeLog-svn, scripts/git2cl: Makefile.am:
+	Add maintainer's release target After our migrating to GIT, ChangeLog is no longer written by
+	developers.  However, we would expect to check the detailed
+	development history in each release, and the generated file
+	ChangeLog should be shipped as well.  use `make release`` to obtain the release tarball in bzip2 form.
+
+2012-12-30  Jim Huang <jserv@0xlab.org>
+
+	* data/phone.cin, data/tsi.src: data: Correct Bopomofo
+	representation of '餑'
+
+2012-12-30  Jim Huang <jserv@0xlab.org>
+
+	* data/phone.cin, data/tsi.src: data: Correct bopomofo
+	representation of '一骨碌' and '一轂轆'
+
+2012-12-30  Jim Huang <jserv@0xlab.org>
+
+	* data/phone.cin, data/tsi.src: tsi.src/phone.cin: Add variants
+	about '掇' Refer to 重編國語辭典修訂本 (Ministry of Education, R.O.C.)
+
+2012-12-30  Jim Huang <jserv@0xlab.org>
+
+	* data/Makefile.am: data: minor build target tweak
+
+2012-12-30  Jim Huang <jserv@0xlab.org>
+
+	* data/Makefile.am: data: Track tsi.src and phone.cin to guarantee
+	the generated files
+
+2012-12-30  Jim Huang <jserv@0xlab.org>
+
+	* data/tsi.src: data/tsi.src: Remove unused Removed: 左邊攔, 老上去
+
+2012-12-30  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: NEWS: Mention GCIN/HIME integration
+
+2012-12-30  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: NEWS: Mention THL and MPS2 Pinyin keyboard layout support
+
+2012-12-30  Wei-Hao Syu <whsyu.tw@gmail.com>
+
+	* data/pinyin.tab, include/internal/chewing-private.h,
+	include/internal/chewingutil.h, include/internal/pinyin-private.h,
+	include/internal/zuin-private.h, src/chewingio.c,
+	src/chewingutil.c, src/choice.c, src/common/key2pho.c,
+	src/pinyin.c, src/zuin.c, test/test-keyboard.c: Support THL (Taiwan
+	Huayu Luomapinyin) and MPS2 Pinyin keyboard THL (Taiwan Huayu Luomapinyin)[*] is derived from Hanyu Pinyin
+	system and adapted according to the conventions in Taiwan.  This
+	patch introduces two key layouts: THL and MPS2 Pinyin
+	(注音二式).  Also, the case when one key sequence is mapped to
+	several Pinyin representations is considered.  The new-added
+	phoneAlt in struct ZuinData is used for such purpose.  For example:   KB_THL_PINYIN: (Taiwan Huayu Luomapinyin)   phone: 0x1c80  (ㄒㄧ)   phoneAlt: 0x2a00 (ㄙ)   KB_HANYU_PINYIN:   phone: 0x2a00 (ㄙ)   phoneAlt: 0x1c80  (ㄒㄧ) The phonetic representation will be decided upon the given keyboard
+	layout.  Check the following discussion for details:
+	https://groups.google.com/group/chewing-devel/browse_thread/thread/4b5aefc87356d2fe[*] http://thl.tw/about Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2012-12-30  ChangZhuo Chen <czchen@gmail.com>
+
+	* .travis.yml: Adjust travis-ci configuration Now we only build the following conbinations: - gcc + autotools - gcc + autotools + --disable-binary-data - clang + autotools - gcc + cmake
+
+2012-12-30  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h, src/char.c, src/chewingio.c,
+	src/dict.c, src/tree.c, test/test-path.c: Fix non binary data build
+
+2012-12-30  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/phone.cin: Remove duplicated word in phone.cin
+
+2012-12-29  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c: Fix memory leak when malloc() fails
+
+2012-12-29  Jim Huang <jserv@0xlab.org>
+
+	* TODO: TODO: drop minor optimizations
+
+2012-12-29  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/hash-private.h,
+	include/internal/userphrase-private.h: Do not typedef ChewingData in
+	userphrase-private.h Some compilers (ex gcc 4.2.1) cannot compile due to "redefinition
+	error", so we cannot typedef ChewingData in userphrase-private.h.
+	The reason why we cannot include chewing-private.h in
+	userphrase-private.h is because windows-chewing project.  The current windows-chewing project needs to include hash-private.h,
+	which includes userphrase-private.h. If we include
+	chewing-private.h, the dependency will become windows-chewing ->
+	hash-private.h -> userphrase-private.h -> chewing-private.h ->
+	plat_mmap.h -> plat_types.h -> ... and eventually we need all
+	headers in libchewing to build windows-chewing.  Thank whsyu for reporting this issue.
+
+2012-12-28  Jim Huang <jserv@0xlab.org>
+
+	* CMakeLists.txt, Makefile.am,
+	include/internal/hanyupinyin-private.h,
+	include/internal/pinyin-private.h, src/Makefile.am,
+	src/chewingio.c, src/hanyupinyin.c, src/pinyin.c, src/zuin.c: Rename
+	all occurrence of 'hanyupinyin' with 'pinyin' to be more generic We are going to merge THL-Pinyin (台灣華語羅馬拼音) and
+	MPS2-Pinyin (注音二式).  It should be better to make naming more
+	consistent.
+
+2012-12-28  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: NEWS: reflect recent changes
+
+2012-12-28  Jim Huang <jserv@0xlab.org>
+
+	* data/tsi.src: tsi.src: Add variants about '嬛' Refer to 重編國語辭典修訂本 (Ministry of Education, R.O.C.)
+	and "漢語大詞典"
+
+2012-12-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/Makefile.am: Fix `make valgrind-check'
+
+2012-12-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-config.c: Fix memory error in test suite
+
+2012-12-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* .travis.yml, CMakeLists.txt: Add memory test in `cmake test'
+
+2012-12-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* .travis.yml: Add cmake build to travis-ci
+
+2012-12-28  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* .travis.yml: Setup email
+
+2012-12-27  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* .travis.yml: Add texinfo dep
+
+2012-12-27  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* .travis.yml: Add .tarvis.yml. Closes #42
+
+2012-12-27  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Build only static library in Visual Studio Do not build shared library in Visual Studio because shared and
+	static libraries both have the same extension name `lib'. It will
+	cause name collision if we build both. See [1] for more information.  [1] http://xenophilia.org/winvunix.html
+
+2012-12-27  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/userphrase-private.h, src/chewingio.c, src/hash.c,
+	src/tree.c: Use forward declaration to break include dependencies
+
+2012-12-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort_dic.c: Return error when phrase and bopomofo length
+	mismatch
+
+2012-12-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Fix errors in tsi.src
+
+2012-12-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort_dic.c: Check invalid bopomofo string in tsi.src
+
+2012-12-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/common/chewing-utf8-util.c, src/common/key2pho.c,
+	test/test-key2pho.c: Return 0 when UintFromPhone receives invalid
+	bopomofo
+
+2012-12-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/common/key2pho.c: Remove magic number
+
+2012-12-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Avoid using UTF8 literal
+
+2012-12-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Prepend the CMAKE_C_FLAGS in CMakeLists.txt The CMAKE_C_FLAGS might be set by user via `cmake
+	-DCMAKE_C_FLAGS=-O0 ...'.  Since the CMAKE_C_FLAGS provided by user
+	shall have highest priority, we shall prepend instead of append the
+	CMAKE_C_FLAGS.
+
+2012-12-26  Jim Huang <jserv@0xlab.org>
+
+	* data/tsi.src: Fix incorrect Bopomofo sequence of '冼' Reported by Bo-cheng Jan <school510587@yahoo.com.tw>
+
+2012-12-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitattributes: Treat /test/default-test.txt as binary file in git /test/default-test.txt is used to test mmap functionality, and its
+	size must be 28. To prevent git from doing LF -> CRLF conversion, we
+	need to set its attribute as binary.
+
+2012-12-21  Jim Huang <jserv@0xlab.org>
+
+	* CMakeLists.txt: cmake: Implement option USE_BINARY_DATA
+
+2012-12-21  Jim Huang <jserv@0xlab.org>
+
+	* CMakeLists.txt: cmake: Separate build time flags properly
+
+2012-12-21  Jim Huang <jserv@0xlab.org>
+
+	* CMakeLists.txt: cmake: Simplify the defintion for ENABLE_DEBUG
+
+2012-12-21  Jim Huang <jserv@0xlab.org>
+
+	* CMakeLists.txt: cmake: Make option "Debug support" functional to
+	compilers
+
+2012-12-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c, src/porting_layer/include/plat_path.h,
+	src/porting_layer/src/plat_path.c: Use #ifdef instead of #if
+
+2012-12-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/simulate.c, test/test-bopomofo.c, test/test-config.c,
+	test/test-easy-symbol.c, test/test-fullshape.c,
+	test/test-key2pho.c, test/test-regression.c, test/test-reset.c,
+	test/test-special-symbol.c, test/test-symbol.c, test/test-utf8.c,
+	test/testhelper.c, test/testhelper.h: Rewrite test suite to support
+	Visual Studio See 9942777acb0b2147340275ae0bfa55415f0f43c1 for detail.
+
+2012-12-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore: Update .gitignore for cmake and Visual Studio
+
+2012-12-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, cmake_chewing.pc.in, include/cmake_config.h.in: 
+	Add cmake as another build system
+
+2012-12-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h: Do not define min and max in
+	Visual Studio Visual Studio has its own min and max.
+
+2012-12-16  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/Makefile.am, test/test-bopomofo.c, test/test-config.c,
+	test/test-easy-symbol.c, test/test-fullshape.c,
+	test/test-key2pho.c, test/test-keyboard.c, test/test-mmap.c,
+	test/test-path.c, test/test-regression.c, test/test-reset.c,
+	test/test-special-symbol.c, test/test-symbol.c, test/test-utf8.c,
+	test/test.c, test/test.h, test/testchewing.c, test/testhelper.c,
+	test/testhelper.h: Rename libtest to libtesthelper cmake uses `make test' to launch test suite, so we cannot have any
+	target named test.
+
+2012-12-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort_dic.c: Add 結巴(ㄐㄧㄝ ㄅㄚ˙) as an
+	exception phrase
+
+2012-12-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/chewingutil.c, src/tools/sort_dic.c: Rewrite
+	to support Visual Studio Visual Studio does not support the following parts of source code: - Visual Studio does not support C99, so we cannot use designated
+	  initializer and we need to declare all variables before statement.  - Visual Studio uses BOM to determine file encode, so it does not
+	  consider source files as UTF8 encoding. All UTF8 string in source
+	  shall written as escaped string.
+
+2012-12-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c: Fix AutoShiftCur when bPhraseChoiceRearward is 1 When bPhraseChoiceRearward is 1, the cursor before auto shift is at
+	the end of phrase. Thus the new cursor position is the old cursor
+	position + 1.
+
+2012-12-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-regression.c: Add test case for libchewing issue 30
+
+2012-12-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Fix several phrases in tsi.src
+
+2012-12-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/phone.cin: Add 虎(ㄏㄨ) and 作(ㄗㄨㄛ)
+
+2012-12-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort_dic.c: Add 成日家(ㄔㄥˊ ㄖˋ ㄐㄧㄚ˙) as
+	an exception phrase
+
+2012-12-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort_dic.c: Add 好萊塢(ㄏㄠˇ ㄌㄞˊ ㄨ) as an
+	exception phrase 塢 is not pronounced as ㄨ in [1]. However, 好萊塢 is pronunced
+	as ㄏㄠˇ ㄌㄞˊ ㄨ in [2]. So we add it as an exception phrase
+	when doing check.  [1] http://dict.variants.moe.edu.tw/ [2]
+	http://dict.revised.moe.edu.tw/
+
+2012-12-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/porting_layer/src/plat_path.c: Fix default search path
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* src/porting_layer/include/sys/plat_windows.h,
+	src/porting_layer/src/plat_path.c: porting_layer: Implement strtok_r
+	for WIN32/WIN64 strtok_r() is used in our test suite.  The porting-layer is just
+	providing such implementation to satisfy the dependency.
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* data/Makefile.am: data: call sort_dit with env LC_ALL=C It is possible to use MinGW + WINE for cross-compiling libchewing
+	under GNU/Linux.  However, if the locale environment variable is not
+	simply "C", sort_dic would cause endless loop.  Set LC_ALL to "C" before calling sort_dic.
+
+2012-12-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort_dic.c: Fix compiling warning
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* src/tools/sort_dic.c: sort_dic: Avoid using the conflicting
+	structure name While cross-compiling with 686-w64-mingw32 target, gcc complains as
+	following:   sort_dic.c:58:3: error: conflicting types for ‘WORD’   /usr/i686-w64-mingw32/include/windef.h:114:24: note: previous
+	                                                 declaration of ‘WORD’ was here It is better to rename the internal structure.
+
+2012-12-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test cases for Home, End
+
+2012-12-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test cases for Capslock
+
+2012-12-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h, src/chewingio.c,
+	src/chewingutil.c: Remove unused bCaseChange
+
+2012-12-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test cases for Tab
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* README, contrib/Makefile-simple-select, contrib/simple-select.c: 
+	contrib: Add simplified example to illustrate the usage of
+	libchewing File contrib/simple-select.c was contributed by starforcefield:     starforcefield.wordpress.com/2012/08/13/
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* README: README: add web resources
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* data/phone.cin, data/tsi.src: data: Correct phonetic
+	representation of '什麼' again.  According to Ministry of Education, R.O.C., '什' is regarded as the
+	variant of '甚', which should be 'ㄕㄜˊ' in Bopomofo
+	representation.  To ensure the compatibility of the original
+	sequence, both 'ㄕㄜ˙' and ㄕㄜˊ' are accepted.  Reference:   http://dict.variants.moe.edu.tw/yitia/fra/fra00070.htm Close issue #438   http://code.google.com/p/chewing/issues/detail?id=438
+
+2012-09-08  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/tools/sort_dic.c: Remove redundant extern declaration and
+	comment.
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: NEWS: append the release date of each version
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* README: README: merge the user-guide from ibus with modifications
+	about API info The original material:     http://code.google.com/p/ibus/wiki/ChewingUserGuide ) Add libchewing API information
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* README: README: improve project descriptions and update the status
+
+2012-12-10  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: NEWS: reflect recent changes
+
+2012-12-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Fix test case
+
+2012-12-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Fix several errors in tsi.src
+
+2012-12-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort_dic.c: Increase maximum phrase size to 11
+
+2012-12-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/key2pho-private.h, src/common/key2pho.c,
+	src/tools/sort_dic.c: Add check in sort_dic Now sort_dic checks the following errors: - The bopomofo in phrase is not in word (like   50101fe213efaad10cb09beef9693e0ec63ee391).  - Length of phrase is not the same as length of bopomofo.
+
+2012-12-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/test-bopomofo.c: Add test case for
+	get_phoneSeq
+
+2012-12-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test cases for ShiftRight
+
+2012-12-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, data/tsi.src, test/Makefile.am,
+	test/test-regression.c: Fix 趕人 in tsi.src
+
+2012-12-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add missing chewing_delete() in
+	test-bopomofo
+
+2012-12-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h, src/userphrase.c: Move global
+	variable pItemLast to ChewingData
+
+2012-12-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test cases for ShiftLeft
+
+2012-12-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test.c, test/test.h: Add functions for userphrase testing
+
+2012-12-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-config.c: Refactoring test_set_candPerPage
+
+2012-12-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/mod_aux.c: Check calloc failure
+
+2012-12-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/test-bopomofo.c: Add test cases for Down
+
+2012-12-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c, test/test-config.c,
+	test/test-easy-symbol.c, test/test-fullshape.c,
+	test/test-keyboard.c, test/test-reset.c,
+	test/test-special-symbol.c, test/test-symbol.c: Remove check for
+	chewing_new to reduce test output
+
+2012-12-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/test-bopomofo.c: Add test cases for Up
+
+2012-12-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test.c: Fix test message
+
+2012-12-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test cases for Esc, Del, Backspace
+
+2012-12-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi, test/test.c, test/test.h: Update document and
+	test case for chewing_zuin_Check chewing_zuin_Check has different return value than
+	chewing_commit_Check, chewing_buffer_Check, chewing_aux_Check.
+	Update document and test case for this different.
+
+2012-12-02  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test.c, test/test.h: Add ok_keystoke_rtn to test keystoke
+	return
+
+2012-12-02  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/test-config.c: Do input check in
+	chewing_set_xxx functions The chewing_set_xxx checks input and does nothing when input is
+	invalid.
+
+2012-12-02  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-config.c: Rename and reorder test case
+
+2012-12-02  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-config.c: Move deprecated API test case to
+	test_deprecated
+
+2012-12-02  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/test-config.c: Add range check for
+	chewing_set_maxChiSymbolLen
+
+2012-12-02  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-config.c: Add test case for maxChiSymbolLen
+
+2012-12-02  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-config.c: Add test for all default configuration
+
+2012-12-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi, include/global.h, src/chewingio.c,
+	test/test-config.c: Deprecate hsuSelKeyType API chewing_set_hsuSelKeyType and chewing_get_hsuSelKeyType set/get the
+	hsuSelKeyType which is not used anymore in current code. Since we
+	have chewing_set_selKey and chewing_get_selKey, these two functions
+	are marked as deprecated.
+
+2012-12-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi: Update document
+
+2012-12-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi, test/test-config.c: Add test case for set
+	select key
+
+2012-11-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test.h: Rewrite macro ARRAY_SIZE by using typeof to determine
+	the data type See b31a0ec03175aa245fedb22832a91a55a796d148 for more information.
+
+2012-11-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, src/chewingio.c, test/Makefile.am,
+	test/test-keyboard.c: Add test-keyboard to test keyboard related API
+
+2012-11-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* COPYING: Update the address of Free Software Foundation.
+
+2012-11-27  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tree.c: Copy functions description from chewing-report.pdf
+
+2012-11-27  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/mod_aux.c: Fix return value
+
+2012-11-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* README: Fix typo
+
+2012-11-19  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tree.c: Remove parameters in FindInterval
+
+2012-11-19  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/tree-private.h, src/chewingutil.c, src/tree.c: 
+	Remove parameters in Phrasing
+
+2012-11-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c, test/test-easy-symbol.c,
+	test/test-special-symbol.c, test/test-symbol.c: Add
+	ok_preedit_buffer to test preedit buffer content
+
+2012-11-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test.c: Fix internal_ok_buffer for buffer get length function
+
+2012-11-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/Makefile.am: Use static link for test
+
+2012-11-21  Jim Huang <jserv@0xlab.org>
+
+	* data/svnrev, data/tsi.src: Sync with libchewingdata project (r460)
+
+2012-11-21  Jim Huang <jserv@0xlab.org>
+
+	* README: README: simplify the description of platform integration
+
+2012-11-21  Jim Huang <jserv@0xlab.org>
+
+	* scripts/gendiff-from-libchewingdata.sh: 
+	scripts/gendiff-from-libchewingdata.sh: set locale properly The original logic of this script is to retrieve Subversion
+	information from libchewingdata project.  However, the combination
+	of awk and cut did not take localized messages into considerations.
+
+2012-11-21  Jim Huang <jserv@0xlab.org>
+
+	* src/private.h: Rewrite macro ARRAY_SIZE by using typeof to
+	determine the data type In GCC extensions to C and C++, the typeof operator returns the
+	static type of the object, which prevent macro ARRAY_SIZE from
+	accepting type char* instead of expected type char[].
+
+2012-11-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-fullshape.c, test/test-special-symbol.c, test/test.c: 
+	Verify return of chewing_commit_Check
+
+2012-11-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c, test/test-easy-symbol.c,
+	test/test-fullshape.c, test/test-reset.c,
+	test/test-special-symbol.c, test/test-symbol.c, test/test.c,
+	test/test.h: Update test functions for other buffer type
+
+2012-11-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/mod_aux.c: Fix return value
+
+2012-11-13  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/chewingutil.c, src/private.h: Add ARRAY_SIZE
+
+2012-11-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, test/Makefile.am, test/test-special-symbol.c: Add
+	test-special-symbol
+
+2012-11-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c: Update chewing_handle_Space Use chewing_handle_Default to handle space when there is an
+	imcompleted bopomofo.
+
+2012-11-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, test/Makefile.am, test/test-bopomofo.c, test/test.c,
+	test/test.h: Add test-bopomofo
+
+2012-11-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-symbol.c, test/test.c, test/test.h: Add ok_candidate for
+	candidate testing
+
+2012-11-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* configure.ac, src/chewingutil.c,
+	src/porting_layer/include/plat_path.h,
+	src/porting_layer/src/plat_path.c: Use asprintf to create data path
+
+2012-11-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* configure.ac, src/porting_layer/src/plat_path.c: Use
+	AC_CHECK_FUNCS for strtok_r
+
+2012-11-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/char.c, src/dict.c, src/tree.c: HEAD
+
+2012-11-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c, src/hash.c: Use ALC to allocate memory
+
+2012-11-08  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/chewingio.c: Simplify the logic of handle_Space Use handle_Right to handle selection and handle_Default to handle
+	space input. Shouldn't break any old behavior. Also avoided a crash
+	in the old code.
+
+2012-11-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, test/Makefile.am, test/test-fullshape.c: Add
+	test-fullshape
+
+2012-11-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c: Supress valgrind error
+
+2012-11-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h, src/chewingio.c,
+	src/chewingutil.c: Update InitSymbolTable - Return 0 as success, -1 as failure - Reduce stack usage
+
+2012-11-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/chewingutil.c: Update InitEasySymbolInput - Return 0 as success, -1 as failure - Reduce stack usage
+
+2012-11-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-easy-symbol.c, test/test-reset.c, test/test-symbol.c,
+	test/test.c, test/test.h: Rename verify_keystoke to ok_keystoke
+
+2012-11-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test.c, test/test.h: Support variadic argument in test
+	function
+
+2012-10-31  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: Mention the reworked JMCCE, which supports libchewing
+	directly
+
+2012-10-29  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* .gitignore, configure.ac, m4/ax_with_curses.m4, test/Makefile.am,
+	test/gen_keystroke.c: Use ax_with_curses.m4 from autoconf-archive
+
+2012-10-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, doc/libchewing.texi, include/global.h,
+	src/chewingio.c, src/chewingutil.c, src/choice.c, test/Makefile.am,
+	test/test-config.c, test/test-default-config.c: Change default
+	candidate per page to 10
+
+2012-10-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-default-config.c: Fix warning
+
+2012-10-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore: Update .gitignore
+
+2012-10-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, doc/libchewing.texi, src/chewingio.c,
+	test/Makefile.am, test/test-default-config.c, test/test-symbol.c: 
+	Change the default select key to 1234567890
+
+2012-10-27  Jim Huang <jserv@0xlab.org>
+
+	* src/chewingio.c, src/mod_aux.c: Properly add UNUSED attribute to
+	API parameters due to semantics changes
+
+2012-10-27  Jim Huang <jserv@0xlab.org>
+
+	* src/char.c, src/chewingutil.c, src/common/chewing-utf8-util.c,
+	src/dict.c, src/tree.c: Avoid comparison between signed int and
+	unsigned
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi: Fix document error
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi: Update document
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi: Update document
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/mod_aux.c: Remove redundancy code
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-symbol.c: Add test case for symbol candidate page
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-reset.c: Fix warning
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/Makefile.am, test/test-easy-symbol.c, test/test-key2pho.c,
+	test/test-mmap.c, test/test-path.c, test/test-reset.c,
+	test/test-utf8.c, test/test_harness.h: Migrate to libtest and remove
+	test_harness.h
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test.h: Fix ok marco in test.h
+
+2012-10-26  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* : commit 2e7917001c4697937aca010dcd0eca65e615d528 Author: Kan-Ru
+	Chen (陳侃如) <kanru@kanru.info> Date:   Fri Oct 26 19:27:06 2012
+	+0800
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* : commit 99c2fcb9f12014f83efb7a07cff1352b4f9067c7 Author:
+	ChangZhuo Chen <czchen@gmail.com> Date:   Fri Oct 26 19:09:20 2012
+	+0800
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/testchewing.c: Use get_keystroke from libtest
+
+2012-10-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/Makefile.am, test/test.c, test/test.h: Add libtest for unit
+	test
+
+2012-10-26  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* Makefile.am, configure.ac: Autotools cleanup again.
+
+2012-10-25  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* test/gen_keystroke.c, test/testchewing.c: Handle ambiguity of `<'
+	and `>' in testchewing
+
+2012-10-25  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* .gitignore, scripts/lcov.sh: Add script to generate coverage
+	report
+
+2012-10-25  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* doc/libchewing.texi: Update the Setup section
+
+2012-10-25  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* doc/libchewing.texi: Add zuin to glossary
+
+2012-10-25  Jim Huang <jserv@0xlab.org>
+
+	* doc/libchewing.texi: The word "zuin" is obsolete.  Avoid use it in
+	documentation.  We should use "Zhuyin" or Bopomofo while referring to the phonetic
+	system for transcribing Chinese, especially Mandarin, popular in
+	Taiwan.  However, it is a bit late to change API naming though.
+
+2012-10-25  Jim Huang <jserv@0xlab.org>
+
+	* doc/libchewing.texi: Fix trivial typo
+
+2012-10-24  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* doc/libchewing.texi: Fix some typos
+
+2012-10-23  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/swkb.dat, doc/libchewing.texi, test/test-easy-symbol.c: 
+	Update easy symbol document, data, and test case
+
+2012-10-23  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, test/Makefile.am, test/test-easy-symbol.c: Add test
+	case for easy symbol input
+
+2012-10-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-reset.c: Add missing chewing_delete
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* data/Makefile.am: Data files should be installed to
+	architecture-dependent location
+
+2012-10-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c: Do not clean ChewingStaticData in chewing_Reset
+
+2012-10-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h, src/char.c, src/chewingio.c,
+	src/chewingutil.c, src/dict.c, src/hanyupinyin.c, src/hash.c,
+	src/tree.c, src/userphrase.c: Move static data in ChewingData to
+	ChewingStaticData
+
+2012-10-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, test/Makefile.am, test/test-reset.c: Add test-reset to
+	test chewing_Reset
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/chewingio.c, test/gen_keystroke.c, test/test-path.c,
+	test/testchewing.c: Fix chewing_new and add test for get_search_path
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* test/test-mmap.c: Silent test-mmap plat_mmap_set_view test
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* .gitignore, scripts/prepare-release.sh,
+	scripts/remove-autotool.sh: Remove unused scripts To prepare a new relase, use `make dist'.  To remove unwanted files,
+	use `git clean'.
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac, data/Makefile.am, src/porting_layer/Makefile.am,
+	test/test-path.c: Fix `make distcheck'
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* AUTHORS: Add ChangZhuo Chen to AUTHORS
+
+2012-10-20  Kan-Ru Chen <kanru@kanru.info>
+
+	* : Merge pull request #28 from czchen/thread_safe Move global variables to ChewingData and search data files
+	automatically
+
+2012-10-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Merge latest version
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/chewingutil.c: Use strpbrk instead of strtok
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac: Fix indent
+
+2012-10-21  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac, doc/libchewing.texi, include/chewingio.h,
+	include/global.h, include/internal/char-private.h,
+	include/internal/chewing-private.h, include/internal/chewingutil.h,
+	include/internal/hash-private.h,
+	include/internal/key2pho-private.h,
+	include/internal/tree-private.h,
+	include/internal/userphrase-private.h, src/char.c, src/chewingio.c,
+	src/chewingutil.c, src/choice.c, src/common/key2pho.c, src/hash.c,
+	src/tools/maketree.c, src/tools/sort_dic.c, src/tools/sort_word.c,
+	src/tree.c, src/userphrase.c, src/zuin.c: Use C99 int types.
+
+2012-10-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Merge latest version
+
+2012-10-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, test/do-test.c: Fix merge error
+
+2012-10-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore: Update .gitignore
+
+2012-10-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/path-private.h, src/chewingio.c,
+	src/common/Makefile.am, src/common/path.c,
+	src/porting_layer/include/plat_path.h,
+	src/porting_layer/src/Makefile.am,
+	src/porting_layer/src/plat_path_posix.c,
+	src/porting_layer/src/plat_path_windows.c, test/test-path.c: Move
+	path implementation to common
+
+2012-10-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/porting_layer/include/plat_path.h,
+	src/porting_layer/src/plat_path_posix.c,
+	src/porting_layer/src/plat_path_windows.c, test/test-path.c: 
+	Implement plat_path_windows.c
+
+2012-10-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi: Update document
+
+2012-10-19  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* include/internal/chewing-private.h, src/mod_aux.c: Remove WCH_SIZE
+
+2012-10-19  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac, include/internal/chewing-private.h: Define min/max
+	as inline function
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/hash.c: Don't allocate userphrase data twice. Closes #25
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/common/key2pho.c: Remember to NULL terminate pho
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/common/key2pho.c: Don\'t modify key_str
+
+2012-10-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-path.c: Fix `make check' error
+
+2012-10-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/porting_layer/src/plat_path_posix.c,
+	test/test-path.c: Fix indent
+
+2012-10-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/porting_layer/src/plat_path_posix.c: Update default
+	CHEWING_PATH
+
+2012-10-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/porting_layer/src/Makefile.am,
+	src/porting_layer/src/plat_path_posix.c, test/test-path.c: Do not do
+	shell expanding when reading CHEWING_PATH
+
+2012-10-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Merge latest version
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* include/internal/chewing-private.h,
+	include/internal/chewing-utf8-util.h, src/chewingutil.c: Remove
+	wchar_t usage
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* .gitignore, configure.ac, scripts/remove-autotool.sh: Tidy up
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac: Remove the checks that we don't really care
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac, test/gen_keystroke.c: Conditional check ncursesw
+	headers
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac, test/Makefile.am, test/gen_keystroke.c: We don't
+	want to link libchewing with libncursesw Hopefuly this should work on Windows.
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac: Check putenv instead
+
+2012-10-18  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* README: Fix windows documentation
+
+2012-10-17  Kan-Ru Chen <kanru@kanru.info>
+
+	* : Merge pull request #22 from czchen/windows Build on Windows with MinGW
+
+2012-10-17  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* test/Makefile.am: Fix genkeystroke build with newer automake
+
+2012-10-17  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* test/README, test/do-test.c, test/showhide.js, test/test.css,
+	test/xhtml.xsl: Remove old test supporting files
+
+2012-10-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* README: Add document for building on Windows with MinGW
+
+2012-10-17  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac, test/Makefile.am, test/test-key2pho.c,
+	test/test-mmap.c, test/test-utf8.c, test/test_harness.h: Simplify
+	test Makefile.am and remove check dependency Now we could run unit-test anywhere. Just |make check|
+
+2012-10-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/gen_keystroke.c, test/testchewing.c: Change setenv to putenv Windows does not have setenv. Use putenv instead.
+
+2012-10-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/Makefile.am: Add $(EXEEXT) in Makefile.am The target name of testchewing is testchewing$(EXEEXT) in Windows
+	platform.
+
+2012-10-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/porting_layer/include/sys/plat_windows.h: Include <io.h>
+	unconditional in Windows platform - MinGW in Windows needs <io.h> for W_OK
+
+2012-10-16  ChangZhuo Chen <czchen@gmail.com>
+
+	* configure.ac: Use AC_SEARCH_LIBS to find optional libraries Windows does not have PGK_CHECK_MODULES, so we need to use
+	AC_SEARCH_LIBS instead.
+
+2012-10-15  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: reflect development progress
+
+2012-10-15  Kan-Ru Chen <kanru@kanru.info>
+
+	* : Merge pull request #20 from czchen/warning Fix warning in ubuntu 12.04 (-Wunused-result)
+
+2012-10-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/hanyupinyin.c, src/hash.c, src/tools/maketree.c: Check return
+	of fscanf
+
+2012-10-15  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* .gitignore: Fix .gitignore
+
+2012-10-15  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* : commit 9d97a79f9faf66e883f4a029910868090295cd6d Author: Kan-Ru
+	Chen (陳侃如) <kanru@kanru.info> Date:   Sun Oct 7 22:03:09 2012
+	+0800
+
+2012-10-13  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/hash.c,
+	src/porting_layer/include/plat_path.h,
+	src/porting_layer/src/Makefile.am,
+	src/porting_layer/src/plat_path_posix.c, test/gen_keystroke.c,
+	test/testchewing.c: Change path searching parameters
+
+2012-10-13  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/porting_layer/include/plat_path.h,
+	src/porting_layer/src/plat_path_posix.c: Add const for XXX_FILES
+
+2012-10-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c: Remove unused global variable
+
+2012-10-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/Makefile.am, test/do-test.c, test/test-path.c: Add unittest
+	for find_path_by_files
+
+2012-10-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c: Use search path to find symbol and pinyin files
+
+2012-10-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c: Use search path to find dict files
+
+2012-10-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/gen_keystroke.c, test/testchewing.c: Use
+	search path to find char files
+
+2012-10-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/porting_layer/include/plat_path.h,
+	src/porting_layer/src/Makefile.am,
+	src/porting_layer/src/plat_path_posix.c,
+	src/porting_layer/src/plat_path_windows.c: Add find_path_by_files,
+	POSIX version
+
+2012-10-09  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* TODO: Add platform independent binary data to TODO
+
+2012-10-09  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* include/internal/chewing-private.h: Fix duplicated typdef, casuing
+	compliation error.
+
+2012-10-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/private.h: Remove addTerminateService
+
+2012-10-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/hanyupinyin-private.h, src/chewingio.c,
+	src/hanyupinyin.c, src/zuin.c: Move hanyu related global variables
+	to ChewingData
+
+2012-10-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/global-private.h, src/hanyupinyin.c: Move
+	PINYIN_TAB_NAME to global-private.h
+
+2012-10-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/chewingutil.h, src/chewingio.c, src/chewingutil.c: 
+	Move g_easy_symbol_value and g_easy_symbol_num into ChewingData
+
+2012-10-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/chewingutil.h, src/chewingio.c, src/chewingutil.c: 
+	Move symbol_table and n_symbol_entry into ChewingData
+
+2012-10-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c: Change g_easy_symbol_key to const
+
+2012-10-07  Kan-Ru Chen <kanru@kanru.info>
+
+	* : Merge pull request #18 from czchen/gitignore Update .gitignore
+
+2012-10-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore: Update .gitignore
+
+2012-10-07  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* include/internal/chewing-private.h, src/hash.c: Remove unused
+	pHead variable We don't use this variable to track the head of hashtable list
+	anymore.
+
+2012-10-07  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/chewingio.c, src/zuin.c: Remove emacs Local Lariables
+
+2012-10-06  Kan-Ru Chen <kanru@kanru.info>
+
+	* : Merge pull request #17 from czchen/gcov Add --enable-gcov to enable gcov coverage
+
+2012-10-07  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac: Include $CFLAGS in default CFLAGS
+
+2012-10-07  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/hash.c: Fix memory leaks when freeing hashtable. Closes #10 Hashtable is a array of linked lists, each slot shares the same hash
+	value. We must free all of them.
+
+2012-10-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* configure.ac: Add --enable-gcov to enable gcov coverage
+
+2012-10-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/chewingutil.c, src/choice.c,
+	src/common/chewing-utf8-util.c, src/tools/sort_dic.c, src/zuin.c,
+	test/testchewing.c: Fix indent
+
+2012-10-05  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/chewingio.c: Fix mingw32 build (again)
+
+2012-10-05  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac: Add more autoconf checks reported by autoscan
+
+2012-10-05  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* test/gen_keystroke.c, test/test-key2pho.c, test/testchewing.c: Fix
+	warnings in tests
+
+2012-10-05  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* include/internal/chewing-private.h,
+	include/internal/hash-private.h,
+	include/internal/userphrase-private.h: Fix nits
+
+2012-10-04  Kan-Ru Chen <kanru@kanru.info>
+
+	* : Merge pull request #14 from czchen/master Move several global variables into ChewingData
+
+2012-10-04  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Move several global variables into ChewingData
+
+2012-10-04  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac: Add default CFLAGS
+
+2012-10-04  Kan-Ru Chen <kanru@kanru.info>
+
+	* : Merge pull request #11 from naota/patch-1 Fix possible strncat() overflow
+
+2012-10-04  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* Makefile.am, configure.ac, data/Makefile.am, src/Makefile.am,
+	src/porting_layer/Makefile.am, test/Makefile.am: Fix `make dist' and
+	`make distcheck'
+
+2012-10-04  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* Makefile.am, data/Makefile.am, src/Makefile.am,
+	src/common/Makefile.am, src/porting_layer/src/Makefile.am,
+	src/tools/Makefile.am, test/Makefile.am: Tidy up Makefiles
+
+2012-10-04  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* configure.ac, data/Makefile.am, src/Makefile.am: Support building
+	with mingw32 toolchain
+
+2012-10-02  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* test/Makefile.am: Add do-test.xml and test.txt to CLEANFILES
+
+2012-10-02  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* test/test-mmap.c: Fix `make check' in $(testdir)
+
+2012-10-02  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* Makefile.am, data/Makefile.am: Add and use `installdirs' target
+
+2012-10-02  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* data/Makefile.am: Use shell syntax instead of GNU Make macro To avoid automake warning:     data/Makefile.am:37: foreach file,$(static_tables: non-POSIX
+	    variable name data/Makefile.am:37: (probably a GNU make
+	extension)
+
+2012-09-25  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/hash-private.h, src/chewingio.c, src/hash.c: Move
+	pHead to ChewingData
+
+2012-09-25  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/hash-private.h,
+	include/internal/userphrase-private.h, src/choice.c, src/hash.c,
+	src/tree.c, src/userphrase.c: Move hashtable to ChewingData
+
+2012-09-24  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/chewing.h, include/internal/chewing-private.h,
+	src/chewingio.c, src/hash.c, src/userphrase.c: Move chewing_lifetime
+	to ChewingData
+
+2012-09-24  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/hash-private.h, src/chewingio.c, src/hash.c,
+	src/userphrase.c: Move hashfilename into ChewingData
+
+2012-09-24  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/hash-private.h, src/chewingio.c, src/hash.c,
+	test/gen_keystroke.c, test/testchewing.c: Read hash path from
+	CHEWING_PATH environment variable
+
+2012-09-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/char-private.h: Fix function prototype
+
+2012-09-20  Kan-Ru Chen (陳侃如) <kanru@kanru.info>
+
+	* src/hash.c: Properly initialize hashtable, really.  In theory the static hashtable is initialize to zero by default, so
+	we haven't run into any problem yet. But if we call InitHash twice
+	then the hashtable will be ill-initialized.
+
+2012-09-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/dict.c: Remove unused code
+
+2012-09-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/dict-private.h, src/char.c, src/chewingio.c,
+	src/dict.c, src/tree.c: Move global variables in dict.c to
+	ChewingData
+
+2012-09-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h, src/char.c: Rename field name
+	in ChewingData
+
+2012-09-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/dict-private.h, src/choice.c, src/dict.c,
+	src/tree.c, src/userphrase.c: Add ChewingData to GetPhraseFirst and
+	GetPhraseNext
+
+2012-09-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/char.c: Fix compiling error when --enable-binary-data=no
+
+2012-09-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/char-private.h,
+	include/internal/chewing-private.h, src/char.c, src/chewingio.c,
+	src/choice.c, src/tree.c: Move arrPhone, begin, phone_num, ... to
+	ChewingData
+
+2012-09-11  Jim Huang <jserv@0xlab.org>
+
+	* NEWS, README: update platform suport: fcitx and mozc
+
+2012-09-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/char-private.h, include/internal/zuin-private.h,
+	src/char.c, src/chewingio.c, src/choice.c, src/tree.c, src/zuin.c: 
+	Add ChewingData to GetCharFirst parameter
+
+2012-09-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tree.c: Check tree before terminate it
+
+2012-09-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h,
+	include/internal/tree-private.h, src/chewingio.c,
+	src/common/Makefile.am, src/tree.c: Move tree to ChewingData
+
+2012-09-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c: Refactoring: chewing_new, chewing_delete
+
+2012-09-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c: Store dataPath into libraryDataPath
+
+2012-09-09  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/tree-private.h,
+	include/internal/userphrase-private.h, src/chewingio.c,
+	src/chewingutil.c, src/choice.c, src/tree.c, src/userphrase.c: Add
+	ChewingData to TreeFindPhrase parameter
+
+2012-09-08  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: update NEWS
+
+2012-09-08  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/porting_layer/include/plat_mmap.h,
+	src/porting_layer/src/plat_mmap_posix.c,
+	src/porting_layer/src/plat_mmap_windows.c: plat_mmap: Let unchanged
+	filename be const.  Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2012-09-08  Jim Huang <jserv@0xlab.org>
+
+	* include/global.h, include/internal/chewing-utf8-util.h,
+	src/chewingio.c, src/chewingutil.c, src/choice.c,
+	src/common/chewing-utf8-util.c, src/hash.c,
+	src/porting_layer/include/sys/plat_posix.h,
+	src/porting_layer/include/sys/plat_windows.h, src/tools/maketree.c,
+	src/tools/sort_word.c, src/tree.c, test/simulate.c,
+	test/testchewing.c: Bump copyright date
+
+2012-09-08  Jim Huang <jserv@0xlab.org>
+
+	* src/tools/maketree.c: maketree: Close input file after used
+
+2012-09-04  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* include/internal/chewing-utf8-util.h,
+	src/common/chewing-utf8-util.c: Add ueStrStr, which locates a UTF-8
+	substring from UTF-8 string Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2012-09-04  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* include/internal/chewing-utf8-util.h,
+	src/common/chewing-utf8-util.c: Change the modifier of ueStrLen to
+	const Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2012-08-28  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/tools/sort_word.c: sort_word: Eliminate redundant space in
+	structure WORD_DATA Structure WORD_DATA has num[2] array, but num[1] is not actually
+	used.  This patch changes num[2] to num, a single variable.  It
+	eliminates each WORD_DATA instance by 4 bytes (on 32-bit machines)
+	without influencing execution flow.  Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2012-08-16  Jim Huang <jserv@0xlab.org>
+
+	* src/porting_layer/include/sys/plat_posix.h: GNU Hurd doesn't
+	define PATH_MAX.  Define in porting_layer Patched by YunQiang Su <wzssyqa@gmail.com> Signed-off-by: Jim Huang
+	<jserv@0xlab.org>
+
+2012-08-07  Jim Huang <jserv@0xlab.org>
+
+	* autogen.sh: autogen.sh: create directory m4 properly
+
+2012-07-05  Jim Huang <jserv@0xlab.org>
+
+	* README: Mentioned UCIMF support for Chewing IM The implementation of UCIMF-chewing:     https://github.com/pkg-ime/ucimf-chewing
+
+2012-07-02  Jim Huang <jserv@0xlab.org>
+
+	* configure.ac: Fix typo again, enable_curses => enable_ncursesw
+
+2012-06-09  kidwm <wandererm@gmail.com>
+
+	* data/swkb.dat: replace them with more useful symbols
+
+2012-06-04  Jim Huang <jserv@0xlab.org>
+
+	* Makefile.am: Add -I m4 to ACLOCAL_AMFLAGS as autotools suggests
+
+2012-05-04  Kan-Ru Chen <kanru@kanru.info>
+
+	* configure.ac: Fix typo, enable_curses => enable_ncursesw
+
+2012-05-04  Kan-Ru Chen <kanru@kanru.info>
+
+	* TODO: Clean up TODO.
+
+2012-05-04  Kan-Ru Chen <kanru@kanru.info>
+
+	* data/Makefile.am, src/tools/sort_word.c: Support VPATH build.
+
+2012-05-03  KanRu Chen <kanru@kanru.info>
+
+	* : Merge pull request #7 from fourdollars/master Add pkg-config support of ncurses, and enable maintainer mode &
+	silent rules of automake.
+
+2012-05-01  Kan-Ru Chen <kanru@kanru.info>
+
+	* .gitignore: Add more ignored files.
+
+2012-05-01  Kan-Ru Chen <kanru@kanru.info>
+
+	* autogen.sh, configure.ac: Use autoreconf.
+
+2012-05-01  Kan-Ru Chen <kanru@kanru.info>
+
+	* Makefile.am, autogen.sh: Use `foreign' mode. We didn't strictly
+	follow the gnu style.
+
+2012-05-01  Kan-Ru Chen <kanru@kanru.info>
+
+	* .gitignore: Add more ignored directories
+
+2012-05-01  Kan-Ru Chen <kanru@kanru.info>
+
+	* .gitignore: Add .gitignore
+
+2012-04-20  KanRu Chen <kanru@kanru.info>
+
+	* : Merge pull request #6 from fourdollars/master Please refer to
+	http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint=51bc
+
+2012-02-06  kidwm <wandererm@gmail.com>
+
+	* : Merge pull request #4 from buganini/patch-2 Tune order for 常用符號, move ＄％＠＆＃＊ to the end as
+	they are easy to type wit...
+
+2012-02-06  Buganini <buganini@gmail.com>
+
+	* data/symbols.dat: Tune order for 常用符號, move
+	＄％＠＆＃＊ to the end as they are easy to type with full
+	width mode.
+
+2012-01-02  Jim Huang <jserv@0xlab.org>
+
+	* README: README: Add HIME, which is a development fork of gcin
+
+2011-12-26  kidwm <wandererm@gmail.com>
+
+	* : Merge pull request #3 from buganini/patch-1 Update symbols.dat
+
+2011-12-02  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: Fix typo in NEWS
+
+2011-12-02  Jim Huang <jserv@0xlab.org>
+
+	* Makefile.am: Consolidate the installation for Chewing header files
+
+2011-10-09  Jim Huang <jserv@0xlab.org>
+
+	* README: README: mentioned gcin's experimental Chewing IM support
+
+2011-08-17  Lin Cheng Wei <desty966@gmail.com>
+
+	* src/chewingutil.c: Fix valgrind warning When using the gcin valgrind test, it shows the following messages: ==20624== ---- Attach to debugger ? --- [Return/N/n/Y/y/C/c] ----
+	==20624== Use of uninitialised value of size 4 ==20624==    at
+	0x5A24DAF: ueStrNCpy (chewing-utf8-util.c:44) ==20624==    by
+	0x5A1F2A9: InitSymbolTable (chewingutil.c:1415) ==20624==    by
+	0x4B79DFF: ??? (in /lib/libc-2.14.so) ==20624== ==20624== Use of
+	uninitialised value of size 4 ==20624==    at 0x5A24DAF: ueStrNCpy
+	(chewing-utf8-util.c:44) ==20624==    by 0x5A1F508:
+	InitEasySymbolInput (chewingutil.c:1486) ==20624==    by 0x5A1A9F7:
+	chewing_Init (chewingio.c:171) ==20624==    by 0x5A075F6:
+	module_init_win (chewing.cpp:182) ==20624==    by 0x8050B22:
+	init_in_method (eve.cpp:938) ==20624==    by 0x8050601:
+	init_state_chinese (eve.cpp:673) ==20624==    by 0x80506CD:
+	toggle_im_enabled (eve.cpp:726) ==20624==    by 0x8050EE7:
+	ProcessKeyPress (eve.cpp:1128) ==20624==    by 0x807D928:
+	process_client_req (im-dispatch.cpp:288) ==20624==    by 0x807DD82:
+	cb_read_gcin_client_data (im-srv.cpp:41) ==20624==    by 0x49D26CD:
+	??? (in /usr/lib/libglib-2.0.so.0.2800.8) ==20624==    by 0x498CC4E:
+	g_main_context_dispatch (in /usr/lib/libglib-2.0.so.0.2800.8) It seems that there have some uninitialised values in chewingutil.c
+	,
+
+2011-07-25  Jim Huang <jserv@0xlab.org>
+
+	* include/global.h: Detect the GCC visibility availability for
+	Darwin specific PIC code Reported by Lin Cheng Wei <desty966@gmail.com>
+
+2011-07-10  Jim Huang <jserv@0xlab.org>
+
+	* data/svnrev, data/tsi.src: Bump merged libchewing-data to r459
+
+2011-07-10  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: NEWS: mentioned gcin's experimental Chewing IM support
+
+2011-05-02  Kevin Lo <kevlo@openbsd.org>
+
+	* src/hash.c: Properly initialize hash table Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2011-03-10  Jim Huang <jserv@0xlab.org>
+
+	* src/common/key2pho.c: Fix typo in comment
+
+2011-03-03  Jim Huang <jserv@0xlab.org>
+
+	* README: s/svn/GIT/
+
+2011-03-03  Jim Huang <jserv@0xlab.org>
+
+	* README, src/tools/Makefile.am: Improve cross-build instructions
+
+2011-03-03  Jim Huang <jserv@0xlab.org>
+
+	* autogen.sh: Touch ChangeLog to satisfy autotool ChangeLog is deprecated, but autotool expects one in source
+	directory.
+
+2011-03-03  Hialan Liu <hialan.liu@gmail.com>
+
+	* include/global.h: Correct symbol export/import definitions for
+	Microsoft Windows When linking to statically-linked chewing.lib on Windows, the macro,
+	CHEWING_API, should be empty.  Neither __declspec(dllimport) nor
+	__declspec(dllexport) would be defined to CHEWING_API.  Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2011-03-03  Jim Huang <jserv@0xlab.org>
+
+	* include/global.h: Extend Microsoft specific predefined macros from
+	Win32 to Win64
+
+2011-03-03  Hialan Liu <hialan.liu@gmail.com>
+
+	* src/choice.c, src/porting_layer/include/sys/plat_windows.h: Fix
+	build with Microsoft VC8 Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2011-03-03  Hialan Liu <hialan.liu@gmail.com>
+
+	* src/tree.c: Fix build when USE_BINARY_DATA is not defined Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2011-03-01  Jim Huang <jserv@0xlab.org>
+
+	* README: Rename from win32-chewing to windows-chewing for 64-bit
+	enablement
+
+2011-03-01  Jim Huang <jserv@0xlab.org>
+
+	* AUTHORS: trivial formatting fix
+
+2011-03-01  Jim Huang <jserv@0xlab.org>
+
+	* TODO: Drop "Abstract the I/O layer" plan The current development trend is to use bus oriented mechanisms to
+	communicate between input method services and the context in
+	specific applications.  We no longer need this.
+
+2011-03-01  Jim Huang <jserv@0xlab.org>
+
+	* Update contact info
+
 2011-02-27  Jim Huang  <jserv@0xlab.org>
 
 	* configure.ac: Bump version to 0.3.3
