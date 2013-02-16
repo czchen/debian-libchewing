@@ -1,2 +1,2 @@
 version=3
-http://chewing.csie.net/download/libchewing/libchewing-(.*)\.tar.bz2
+http://code.google.com/p/chewing/downloads/list .*/libchewing-*\.*(.*)\.tar\.bz2
