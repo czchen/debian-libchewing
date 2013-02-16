@@ -20,7 +20,7 @@
  *
  *	  Read dictionary format :
  *  	  phrase   frequency   zuin1 zuin2 zuin3 ... \n
- *  	  Output format : ( Sorted by zuin's uint16 number )
+ *  	  Output format : ( Sorted by zuin's uint16_t number )
  *  	  phrase   frequency   zuin1 zuin2 zuin3 ... \n
  */
 
@@ -32,21 +32,33 @@
 #include "global-private.h"
 #include "key2pho-private.h"
 #include "config.h"
+#include "chewing-utf8-util.h"
+#include "chewing-private.h"
 
 #define MAXLEN		149
-#define MAXZUIN		9
+#define MAXZUIN		11
 #define MAX_FILE_NAME	(256)
+#define MAX_UTF8_LEN    (4)
+#define DATA_LEN        (420000)
 
 #define IN_FILE		"phoneid.dic"
 
 typedef struct {
 	char str[ MAXLEN ];
 	int freq;
-	uint16 num[ MAXZUIN ];
+	uint16_t num[ MAXZUIN ];
 } RECORD;
 
-RECORD data[ 420000L ];
+RECORD data[ DATA_LEN ];
 long nData;
+
+typedef struct {
+	char word[ MAX_UTF8_LEN + 1 ];
+	uint16_t phone;
+} CWORD;
+
+CWORD wordData[ DATA_LEN ];
+int nWordData;
 
 const char user_msg[] = 
 	"sort_dic -- read chinese phrase input and generate data file for chewing\n" \
@@ -58,19 +70,24 @@ const char user_msg[] =
 		"2." PH_INDEX_FILE " \t-- index file of phrase \n" \
 		"3." IN_FILE " \t-- intermediate file for make_tree \n";
 
-extern const char *ph_pho[];
-/*extern uint16 PhoneBg2Uint( const char *phone );*/
-
 void DataSetNum( long _index )
 {
 	char buf[ MAXLEN ], *p;
 	int i = 0;
+	int phone;
 
 	strcpy( buf, data[ _index ].str );
 	strtok( buf, " \n\t" );
 	data[ _index ].freq = atoi( strtok( NULL, " \n\t" ) );
-	for ( p = strtok( NULL, " \n\t" ); p; p = strtok( NULL, " \n\t" ) ) 
-		data[ _index ].num[ i++ ] = UintFromPhone( p );
+	for ( p = strtok( NULL, " \n\t" ); p; p = strtok( NULL, " \n\t" ) )  {
+		phone = UintFromPhone( p );
+		if ( phone == 0 ) {
+			fprintf( stderr, "Invalid bopomofo `%s' in `%s'\n",
+				p, data[ _index ].str );
+			exit( -1 );
+		}
+		data[ _index ].num[ i++ ] = phone;
+	}
 }
 
 void DataStripSpace( long _index )
@@ -132,13 +149,99 @@ int CompUint( long a, long b )
 	return 0;
 }
 
+static void WordAdd( long index )
+{
+	if ( ueStrLen( data[ index ].str ) == 1 ) {
+		strncpy( wordData[ nWordData ].word, data[ index ].str, sizeof( wordData[ nWordData ].word ) );
+		wordData[ nWordData ].phone = data[ index ].num[0];
+		++nWordData;
+	}
+}
+
+int CompWord( const void *a, const void *b )
+{
+	const CWORD *x = (const CWORD *) a;
+	const CWORD *y = (const CWORD *) b;
+	int cmp;
+
+	cmp = strcmp( x->word, y->word );
+	if ( cmp == 0 ) {
+		cmp = x->phone - y->phone;
+	}
+
+	return cmp;
+}
+
+static int IsExceptionPhrase( const RECORD *record )
+{
+	static const RECORD EXCEPTION[] = {
+		{ "\xE5\xA5\xBD\xE8\x90\x8A\xE5\xA1\xA2" /* 好萊塢 */ , 0, { 5691, 4138, 256 } /* ㄏㄠˇ ㄌㄞˊ ㄨ */ },
+		{ "\xE6\x88\x90\xE6\x97\xA5\xE5\xAE\xB6" /* 成日家 */ , 0, { 8290, 9220, 6281 } /* ㄔㄥˊ ㄖˋ ㄐㄧㄚ˙ */ },
+		{ "\xE7\xB5\x90\xE5\xB7\xB4" /* 結巴 */ , 0, { 6304, 521 } /*  ㄐㄧㄝ ㄅㄚ˙ */ },
+	};
+
+	int i;
+
+	for ( i = 0; i < sizeof( EXCEPTION ) / sizeof( EXCEPTION[ 0 ] ); ++i ) {
+		if ( strcmp( record->str, EXCEPTION[ i ].str ) == 0 &&
+			memcmp( record->num, EXCEPTION[ i ].num, sizeof( record->num ) ) == 0 ) {
+			return 1;
+		}
+	}
+
+	return 0;
+
+}
+
+static void VerifyData()
+{
+	int i;
+	int j;
+	int k;
+	CWORD word;
+	char bopomofo[ MAX_UTF8_LEN * ZUIN_SIZE + 1 ];
+	int phrase_len;
+	int phone_len;
+
+	qsort( wordData, nWordData, sizeof( wordData[0] ), CompWord );
+
+	for ( i = 0; i < nData; ++i ) {
+		phrase_len = ueStrLen( data[ i ].str );
+
+		for ( phone_len = 0; data[ i ].num[ phone_len ] != 0; ++phone_len ) {
+		}
+
+		if ( phrase_len != phone_len ) {
+			fprintf( stderr, "Problem in phrase `%s'. ", data[ i ].str );
+			fprintf( stderr, "Phrase length and bopomofo length mismatch.\n" );
+			exit( -1 );
+		}
+
+		for ( j = 0; j < phrase_len; ++j ) {
+			ueStrNCpy( word.word, ueStrSeek( data[ i ].str, j ), 1, 1);
+			word.phone = data[ i ].num[ j ];
+			if ( bsearch( &word, wordData, nWordData, sizeof( word ), CompWord ) == NULL &&
+				! IsExceptionPhrase(&data[ i ]) ) {
+				PhoneFromUint( bopomofo, sizeof( bopomofo ), word.phone );
+				fprintf( stderr, "Problem in phrase `%s' ", data[ i ].str );
+				fprintf( stderr, "(%d", data[ i ].num[ 0 ] );
+				for ( k = 1; data[ i ].num[ k ] != 0; ++k ) {
+					fprintf( stderr, ", %d", data[ i ].num[ k ] );
+				}
+				fprintf( stderr, "). " );
+				fprintf( stderr, "Word `%s' has no phone %d (%s).\n", word.word, word.phone, bopomofo );
+			}
+		}
+	}
+}
+
 int main( int argc, char *argv[] )
 {
 	FILE *infile;
 	FILE *dictfile, *treedata, *ph_index;
 	char in_file[ MAX_FILE_NAME ] = "tsi.src";
 	long i, k;
-    int tmp;
+	int tmp;
 #ifdef USE_BINARY_DATA
 	unsigned char size;
 #endif
@@ -176,8 +279,11 @@ int main( int argc, char *argv[] )
 			continue;
 		DataSetNum( nData );
 		DataStripAll( nData );
+		WordAdd( nData );
 		nData++;
 	}
+	VerifyData();
+
 	qsort( data, nData, sizeof( RECORD ), CompRecord );
 
 	for ( i = 0; i < nData - 1; i++ ) {

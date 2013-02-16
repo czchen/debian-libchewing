@@ -1,55 +1,43 @@
-AUX_DIST = \
-	$(ac_aux_dir)/config.guess \
-	$(ac_aux_dir)/config.sub \
-	$(ac_aux_dir)/compile \
-	$(ac_aux_dir)/depcomp \
-	$(ac_aux_dir)/install-sh \
-	$(ac_aux_dir)/ltconfig \
-	$(ac_aux_dir)/ltmain.sh \
-	$(ac_aux_dir)/missing
+ACLOCAL_AMFLAGS = -I m4
+AUTOMAKE_OPTIONS = foreign
+
+SUBDIRS = src/tools data src test doc
 
 EXTRA_DIST = \
-	config.rpath
-	mkinstalldirs \
 	autogen.sh \
-	chewing.pc \
-	libchewing.spec \
-	Doxyfile
-
-AUTOMAKE_OPTIONS = gnu
-SUBDIRS = src/common src/tools data src
-
-MAINTAINERCLEANFILES = \
-	Makefile.in \
-	aclocal.m4 \
-	configure \
-	config.h.in \
-	$(AUX_DIST)
-
-DISTCLEANFILES = chewing.pc
-
-CLEANFILES = *.bak 
+	$(NULL)
 
 pkgconfigdir = $(libdir)/pkgconfig
-
 pkgconfig_DATA = chewing.pc
 
-chewing_headers = \
+chewing_includedir = $(includedir)/chewing
+chewing_include_HEADERS = \
 	include/chewingio.h \
 	include/mod_aux.h \
 	include/chewing.h \
-	include/global.h
+	include/global.h \
+	$(NULL)
 
-install-data-local:
-	$(mkinstalldirs) $(DESTDIR)/$(prefix)/include/chewing
-	$(INSTALL_DATA) $(chewing_headers) $(DESTDIR)/$(prefix)/include/chewing
-install-manpages:
-	$(mkinstalldirs) $(DESTDIR)/$(prefix)/share/man/man3
-	$(INSTALL_DATA) man/man3/*.3 $(DESTDIR)/$(prefix)/share/man/man3
-docs:
-	if [ -x "@DOXYGEN@" ]; then \
-		@DOXYGEN@ Doxyfile; \
-	fi
-clean-local:
-	rm -rf html
-	rm -rf man
+noinst_HEADERS =\
+	include/internal/char-private.h \
+	include/internal/chewing-private.h \
+	include/internal/chewing-utf8-util.h \
+	include/internal/chewingutil.h \
+	include/internal/choice-private.h \
+	include/internal/dict-private.h \
+	include/internal/global-private.h \
+	include/internal/pinyin-private.h \
+	include/internal/hash-private.h \
+	include/internal/key2pho-private.h \
+	include/internal/tree-private.h \
+	include/internal/userphrase-private.h \
+	include/internal/zuin-private.h \
+	$(NULL)
+
+# Maintainer's release target
+release:
+	$(MAKE) distdir
+	$(top_srcdir)/scripts/git2cl > $(distdir)/ChangeLog
+	cat $(top_srcdir)/scripts/ChangeLog-svn >> $(distdir)/ChangeLog
+	tardir=$(distdir) && $(am__tar) | BZIP2=$${BZIP2--9} bzip2 -c >$(distdir).tar.bz2
+	$(am__remove_distdir)
