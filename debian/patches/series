@@ -1,2 +1,3 @@
 data-clean-timestamp.diff
 define_path_max_ifndef.patch
+prevent_unaligned_memory_access.patch

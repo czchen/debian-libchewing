@@ -1,3 +1,11 @@
+libchewing (0.3.4-2) unstable; urgency=low
+
+  * Team upload.
+  * Memory alignment patch for sparc. Closes: #709934
+  * Disable test.
+
+ -- Osamu Aoki <osamu@debian.org>  Thu, 20 Jun 2013 22:35:31 +0900
+
 libchewing (0.3.4-1) unstable; urgency=low
 
   * debian/watch looks for googlecode now
