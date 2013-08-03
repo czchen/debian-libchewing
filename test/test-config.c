@@ -21,7 +21,8 @@
 static const int MIN_CAND_PER_PAGE = 1;
 static const int MAX_CAND_PER_PAGE = 10;
 static const int DEFAULT_CAND_PER_PAGE = 10;
-static const int MAX_CHI_SYMBOL_LEN = 50; // MAX_PHONE_SEQ_LEN + 1
+static const int MIN_CHI_SYMBOL_LEN = 0;
+static const int MAX_CHI_SYMBOL_LEN = 39;
 
 static const int DEFAULT_SELECT_KEY[] = {
 	'1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
@@ -44,41 +45,41 @@ void test_default_value()
 	ok( select_key, "chewing_get_selKey shall not return NULL" );
 	ok( !memcmp( select_key, DEFAULT_SELECT_KEY,
 		sizeof( DEFAULT_SELECT_KEY )),
-		"select key shall be default value");
+		"default select key shall be default value" );
 	chewing_free( select_key );
 
 	ok( chewing_get_candPerPage( ctx ) == DEFAULT_CAND_PER_PAGE,
-		"candPerPage shall be default value" );
+		"default candPerPage shall be %d", DEFAULT_CAND_PER_PAGE );
 
-	ok( chewing_get_maxChiSymbolLen( ctx ) == 0,
-		"maxChiSymbolLen shall be 0" );
+	ok( chewing_get_maxChiSymbolLen( ctx ) == MAX_CHI_SYMBOL_LEN,
+		"default maxChiSymbolLen shall be %d", MAX_CHI_SYMBOL_LEN );
 
 	ok( chewing_get_addPhraseDirection( ctx ) == 0,
-		"addPhraseDirection shall be 0" );
+		"default addPhraseDirection shall be 0" );
 
 	ok( chewing_get_spaceAsSelection( ctx ) == 0,
-		"spaceAsSelection shall be 0" );
+		"default spaceAsSelection shall be 0" );
 
 	ok( chewing_get_escCleanAllBuf( ctx ) == 0,
-		"escCleanAllBuf shall be 0" );
+		"default escCleanAllBuf shall be 0" );
 
 	ok( chewing_get_hsuSelKeyType( ctx ) == 0,
-		"hsuSelKeyType shall be 0" );
+		"default hsuSelKeyType shall be 0" );
 
 	ok( chewing_get_autoShiftCur( ctx ) == 0,
-		"autoShiftCur shall be 0" );
+		"default autoShiftCur shall be 0" );
 
 	ok( chewing_get_easySymbolInput( ctx ) == 0,
-		"easySymbolInput shall be 0" );
+		"default easySymbolInput shall be 0" );
 
 	ok( chewing_get_phraseChoiceRearward( ctx ) == 0,
-		"phraseChoiceRearward shall be 0" );
+		"default phraseChoiceRearward shall be 0" );
 
 	ok( chewing_get_ChiEngMode( ctx ) == CHINESE_MODE,
-		"ChiEngMode shall be CHINESE_MODE" );
+		"default ChiEngMode shall be CHINESE_MODE" );
 
 	ok( chewing_get_ShapeMode( ctx ) == HALFSHAPE_MODE,
-		"ShapeMode shall be HALFSHAPE_MODE" );
+		"default ShapeMode shall be HALFSHAPE_MODE" );
 
 	chewing_delete( ctx );
 	chewing_Terminate();
@@ -97,8 +98,8 @@ void test_set_candPerPage()
 	};
 
 	ChewingContext *ctx;
-	int i;
-	int j;
+	size_t i;
+	size_t j;
 
 	chewing_Init( 0, 0 );
 
@@ -124,6 +125,7 @@ void test_set_candPerPage()
 void test_set_maxChiSymbolLen()
 {
 	ChewingContext *ctx;
+	int i;
 
 	chewing_Init( 0, 0 );
 
@@ -133,15 +135,54 @@ void test_set_maxChiSymbolLen()
 	ok( chewing_get_maxChiSymbolLen( ctx ) == 16,
 		"maxChiSymbolLen shall be 16" );
 
-	chewing_set_maxChiSymbolLen( ctx, -1 );
+	chewing_set_maxChiSymbolLen( ctx, MIN_CHI_SYMBOL_LEN - 1 );
 	ok( chewing_get_maxChiSymbolLen( ctx ) == 16,
-		"maxChiSymbolLen shall not change" );
+		"maxChiSymbolLen shall not change when set to %d",
+		MIN_CHI_SYMBOL_LEN - 1 );
 
 	chewing_set_maxChiSymbolLen( ctx, MAX_CHI_SYMBOL_LEN + 1 );
 	ok( chewing_get_maxChiSymbolLen( ctx ) == 16,
-		"maxChiSymbolLen shall not change" );
+		"maxChiSymbolLen shall not change when set to %d",
+		MAX_CHI_SYMBOL_LEN + 1 );
 
-	// XXX: test if new maxChiSymbolLen works as expect
+
+	// Test auto commit
+	chewing_set_maxChiSymbolLen( ctx, MAX_CHI_SYMBOL_LEN );
+
+	// In boundary
+	for ( i = 0; i < MAX_CHI_SYMBOL_LEN; ++i )
+		type_keystroke_by_string( ctx, "hk4" );
+	ok( chewing_commit_Check( ctx ) == 0,
+		"auto commit shall not be triggered when entering %d symbols",
+		MAX_CHI_SYMBOL_LEN );
+
+	// Out of boundary
+	type_keystroke_by_string( ctx, "hk4" );
+	ok( chewing_commit_Check( ctx ) == 1,
+		"auto commit shall be triggered when entering %d symbols",
+		MAX_CHI_SYMBOL_LEN + 1);
+
+	chewing_delete( ctx );
+	chewing_Terminate();
+}
+
+void test_maxChiSymbolLen()
+{
+	ChewingContext *ctx;
+	int i;
+
+	chewing_Init( 0, 0 );
+	ctx = chewing_new();
+
+	chewing_set_maxChiSymbolLen( ctx, MAX_CHI_SYMBOL_LEN );
+
+	for ( i = 0; i < MAX_CHI_SYMBOL_LEN; ++i ) {
+		type_keystroke_by_string( ctx, "hk4" );
+	}
+
+	// Use easy symbol 'Orz' as last input for worst case scenario.
+	chewing_set_easySymbolInput( ctx, 1 );
+	type_keystroke_by_string( ctx, "L" );
 
 	chewing_delete( ctx );
 	chewing_Terminate();
@@ -167,7 +208,7 @@ void test_set_selKey()
 		sizeof( ALTERNATE_SELECT_KEY )),
 		"select key shall be ALTERNATE_SELECT_KEY");
 
-	type_keystoke_by_string( ctx, DATA.token );
+	type_keystroke_by_string( ctx, DATA.token );
 	ok_preedit_buffer( ctx, DATA.expected );
 
 	chewing_free( select_key );
@@ -375,8 +416,8 @@ void test_set_ChiEngMode()
 	};
 
 	ChewingContext *ctx;
-	int i;
-	int j;
+	size_t i;
+	size_t j;
 
 	chewing_Init( 0, 0 );
 
@@ -412,8 +453,8 @@ void test_set_ShapeMode()
 	};
 
 	ChewingContext *ctx;
-	int i;
-	int j;
+	size_t i;
+	size_t j;
 
 	chewing_Init( 0, 0 );
 
@@ -440,7 +481,8 @@ void test_deprecated()
 {
 	ChewingContext *ctx;
 	int type;
-	ChewingConfigData configure = { 0 };
+	ChewingConfigData configure;
+	memset( &configure, 0, sizeof( ChewingConfigData ) );
 
 	chewing_Init( 0, 0 );
 
@@ -465,6 +507,7 @@ int main()
 
 	test_set_candPerPage();
 	test_set_maxChiSymbolLen();
+	test_maxChiSymbolLen();
 	test_set_selKey();
 	test_set_addPhraseDirection();
 	test_set_spaceAsSelection();

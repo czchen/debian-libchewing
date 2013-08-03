@@ -57,7 +57,8 @@ check_PROGRAMS = testchewing$(EXEEXT) simulate$(EXEEXT) \
 	randkeystroke$(EXEEXT) $(am__EXEEXT_1) $(am__EXEEXT_2)
 subdir = test
 DIST_COMMON = README $(check_HEADERS) $(dist_noinst_DATA) \
-	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/stresstest.py
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_with_curses.m4 \
 	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
@@ -68,7 +69,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/include/config.h
 CONFIG_CLEAN_FILES =
-CONFIG_CLEAN_VPATH_FILES =
+CONFIG_CLEAN_VPATH_FILES = stresstest.py
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libtesthelper_la_DEPENDENCIES = $(top_builddir)/src/libchewing.la
 am_libtesthelper_la_OBJECTS = testhelper.lo
@@ -80,15 +81,15 @@ am__v_lt_0 = --silent
 am__EXEEXT_2 = test-bopomofo$(EXEEXT) test-config$(EXEEXT) \
 	test-easy-symbol$(EXEEXT) test-fullshape$(EXEEXT) \
 	test-key2pho$(EXEEXT) test-keyboard$(EXEEXT) \
-	test-mmap$(EXEEXT) test-path$(EXEEXT) test-reset$(EXEEXT) \
-	test-regression$(EXEEXT) test-symbol$(EXEEXT) \
-	test-special-symbol$(EXEEXT) test-utf8$(EXEEXT)
+	test-logger$(EXEEXT) test-mmap$(EXEEXT) test-path$(EXEEXT) \
+	test-reset$(EXEEXT) test-regression$(EXEEXT) \
+	test-symbol$(EXEEXT) test-special-symbol$(EXEEXT) \
+	test-userphrase$(EXEEXT) test-utf8$(EXEEXT)
 am__genkeystroke_SOURCES_DIST = gen_keystroke.c
 @ENABLE_TEXT_UI_TRUE@am_genkeystroke_OBJECTS =  \
 @ENABLE_TEXT_UI_TRUE@	gen_keystroke.$(OBJEXT)
 genkeystroke_OBJECTS = $(am_genkeystroke_OBJECTS)
-am__DEPENDENCIES_1 = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+am__DEPENDENCIES_1 = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 @ENABLE_TEXT_UI_TRUE@genkeystroke_DEPENDENCIES =  \
@@ -96,113 +97,113 @@ am__DEPENDENCIES_1 = $(top_builddir)/src/libchewing.la \
 randkeystroke_SOURCES = randkeystroke.c
 randkeystroke_OBJECTS = randkeystroke.$(OBJEXT)
 randkeystroke_LDADD = $(LDADD)
-randkeystroke_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+randkeystroke_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 simulate_SOURCES = simulate.c
 simulate_OBJECTS = simulate.$(OBJEXT)
 simulate_LDADD = $(LDADD)
-simulate_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+simulate_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_bopomofo_SOURCES = test-bopomofo.c
 test_bopomofo_OBJECTS = test-bopomofo.$(OBJEXT)
 test_bopomofo_LDADD = $(LDADD)
-test_bopomofo_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_bopomofo_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_config_SOURCES = test-config.c
 test_config_OBJECTS = test-config.$(OBJEXT)
 test_config_LDADD = $(LDADD)
-test_config_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_config_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_easy_symbol_SOURCES = test-easy-symbol.c
 test_easy_symbol_OBJECTS = test-easy-symbol.$(OBJEXT)
 test_easy_symbol_LDADD = $(LDADD)
-test_easy_symbol_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
+test_easy_symbol_DEPENDENCIES =  \
 	$(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_fullshape_SOURCES = test-fullshape.c
 test_fullshape_OBJECTS = test-fullshape.$(OBJEXT)
 test_fullshape_LDADD = $(LDADD)
-test_fullshape_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_fullshape_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_key2pho_SOURCES = test-key2pho.c
 test_key2pho_OBJECTS = test-key2pho.$(OBJEXT)
 test_key2pho_LDADD = $(LDADD)
-test_key2pho_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_key2pho_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_keyboard_SOURCES = test-keyboard.c
 test_keyboard_OBJECTS = test-keyboard.$(OBJEXT)
 test_keyboard_LDADD = $(LDADD)
-test_keyboard_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_keyboard_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
+	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
+	$(top_builddir)/test/libtesthelper.la
+test_logger_SOURCES = test-logger.c
+test_logger_OBJECTS = test-logger.$(OBJEXT)
+test_logger_LDADD = $(LDADD)
+test_logger_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_mmap_SOURCES = test-mmap.c
 test_mmap_OBJECTS = test_mmap-test-mmap.$(OBJEXT)
 test_mmap_LDADD = $(LDADD)
-test_mmap_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_mmap_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_path_SOURCES = test-path.c
 test_path_OBJECTS = test-path.$(OBJEXT)
 test_path_LDADD = $(LDADD)
-test_path_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_path_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_regression_SOURCES = test-regression.c
 test_regression_OBJECTS = test-regression.$(OBJEXT)
 test_regression_LDADD = $(LDADD)
-test_regression_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
+test_regression_DEPENDENCIES =  \
 	$(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_reset_SOURCES = test-reset.c
 test_reset_OBJECTS = test-reset.$(OBJEXT)
 test_reset_LDADD = $(LDADD)
-test_reset_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_reset_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_special_symbol_SOURCES = test-special-symbol.c
 test_special_symbol_OBJECTS = test-special-symbol.$(OBJEXT)
 test_special_symbol_LDADD = $(LDADD)
-test_special_symbol_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
+test_special_symbol_DEPENDENCIES =  \
 	$(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_symbol_SOURCES = test-symbol.c
 test_symbol_OBJECTS = test-symbol.$(OBJEXT)
 test_symbol_LDADD = $(LDADD)
-test_symbol_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
+test_symbol_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
+	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
+	$(top_builddir)/test/libtesthelper.la
+test_userphrase_SOURCES = test-userphrase.c
+test_userphrase_OBJECTS = test-userphrase.$(OBJEXT)
+test_userphrase_LDADD = $(LDADD)
+test_userphrase_DEPENDENCIES =  \
 	$(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 test_utf8_SOURCES = test-utf8.c
 test_utf8_OBJECTS = test-utf8.$(OBJEXT)
 test_utf8_LDADD = $(LDADD)
-test_utf8_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+test_utf8_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 testchewing_SOURCES = testchewing.c
 testchewing_OBJECTS = testchewing.$(OBJEXT)
 testchewing_LDADD = $(LDADD)
-testchewing_DEPENDENCIES = $(top_builddir)/src/libchewing.la \
-	$(top_builddir)/src/common/libcommon.la \
+testchewing_DEPENDENCIES = $(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/include
@@ -234,15 +235,16 @@ am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libtesthelper_la_SOURCES) $(genkeystroke_SOURCES) \
 	randkeystroke.c simulate.c test-bopomofo.c test-config.c \
 	test-easy-symbol.c test-fullshape.c test-key2pho.c \
-	test-keyboard.c test-mmap.c test-path.c test-regression.c \
-	test-reset.c test-special-symbol.c test-symbol.c test-utf8.c \
-	testchewing.c
+	test-keyboard.c test-logger.c test-mmap.c test-path.c \
+	test-regression.c test-reset.c test-special-symbol.c \
+	test-symbol.c test-userphrase.c test-utf8.c testchewing.c
 DIST_SOURCES = $(libtesthelper_la_SOURCES) \
 	$(am__genkeystroke_SOURCES_DIST) randkeystroke.c simulate.c \
 	test-bopomofo.c test-config.c test-easy-symbol.c \
-	test-fullshape.c test-key2pho.c test-keyboard.c test-mmap.c \
-	test-path.c test-regression.c test-reset.c \
-	test-special-symbol.c test-symbol.c test-utf8.c testchewing.c
+	test-fullshape.c test-key2pho.c test-keyboard.c test-logger.c \
+	test-mmap.c test-path.c test-regression.c test-reset.c \
+	test-special-symbol.c test-symbol.c test-userphrase.c \
+	test-utf8.c testchewing.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -293,11 +295,10 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LIBCHEWING_AGE = @LIBCHEWING_AGE@
 LIBCHEWING_BINARY_VERSION = @LIBCHEWING_BINARY_VERSION@
-LIBCHEWING_CURRENT = @LIBCHEWING_CURRENT@
+LIBCHEWING_MAJOR = @LIBCHEWING_MAJOR@
+LIBCHEWING_MINOR = @LIBCHEWING_MINOR@
 LIBCHEWING_REVISION = @LIBCHEWING_REVISION@
-LIBDEBUG = @LIBDEBUG@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -305,7 +306,6 @@ LIBTOOL_EXPORT_OPTIONS = @LIBTOOL_EXPORT_OPTIONS@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
-MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
@@ -401,12 +401,14 @@ NATIVE_TESTS = \
 	test-fullshape \
 	test-key2pho \
 	test-keyboard \
+	test-logger \
 	test-mmap \
 	test-path \
 	test-reset \
 	test-regression \
 	test-symbol \
 	test-special-symbol \
+	test-userphrase \
 	test-utf8 \
 	$(NULL)
 
@@ -430,7 +432,6 @@ INCLUDES = \
 	$(NULL)
 
 LDADD = \
-	$(top_builddir)/src/libchewing.la \
 	$(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la \
@@ -442,7 +443,7 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -451,9 +452,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu test/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign test/Makefile
+	  $(AUTOMAKE) --gnu test/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -467,9 +468,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 
-$(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
+$(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
+$(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 
@@ -519,6 +520,9 @@ test-key2pho$(EXEEXT): $(test_key2pho_OBJECTS) $(test_key2pho_DEPENDENCIES) $(EX
 test-keyboard$(EXEEXT): $(test_keyboard_OBJECTS) $(test_keyboard_DEPENDENCIES) $(EXTRA_test_keyboard_DEPENDENCIES) 
 	@rm -f test-keyboard$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_keyboard_OBJECTS) $(test_keyboard_LDADD) $(LIBS)
+test-logger$(EXEEXT): $(test_logger_OBJECTS) $(test_logger_DEPENDENCIES) $(EXTRA_test_logger_DEPENDENCIES) 
+	@rm -f test-logger$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(test_logger_OBJECTS) $(test_logger_LDADD) $(LIBS)
 test-mmap$(EXEEXT): $(test_mmap_OBJECTS) $(test_mmap_DEPENDENCIES) $(EXTRA_test_mmap_DEPENDENCIES) 
 	@rm -f test-mmap$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_mmap_OBJECTS) $(test_mmap_LDADD) $(LIBS)
@@ -537,6 +541,9 @@ test-special-symbol$(EXEEXT): $(test_special_symbol_OBJECTS) $(test_special_symb
 test-symbol$(EXEEXT): $(test_symbol_OBJECTS) $(test_symbol_DEPENDENCIES) $(EXTRA_test_symbol_DEPENDENCIES) 
 	@rm -f test-symbol$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_symbol_OBJECTS) $(test_symbol_LDADD) $(LIBS)
+test-userphrase$(EXEEXT): $(test_userphrase_OBJECTS) $(test_userphrase_DEPENDENCIES) $(EXTRA_test_userphrase_DEPENDENCIES) 
+	@rm -f test-userphrase$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(test_userphrase_OBJECTS) $(test_userphrase_LDADD) $(LIBS)
 test-utf8$(EXEEXT): $(test_utf8_OBJECTS) $(test_utf8_DEPENDENCIES) $(EXTRA_test_utf8_DEPENDENCIES) 
 	@rm -f test-utf8$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_utf8_OBJECTS) $(test_utf8_LDADD) $(LIBS)
@@ -559,11 +566,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-fullshape.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-key2pho.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-keyboard.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-logger.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-path.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-regression.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-reset.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-special-symbol.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-symbol.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-userphrase.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-utf8.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_mmap-test-mmap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/testchewing.Po@am__quote@

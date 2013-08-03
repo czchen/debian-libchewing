@@ -59,7 +59,7 @@ int is_bopomofo_collision_key( const char *key )
 		",",
 		".",
 	};
-	int i;
+	size_t i;
 
 	for ( i = 0; i < ARRAY_SIZE( COLLISION_KEY ); ++i ) {
 		if ( strcmp( key, COLLISION_KEY[i] ) == 0 ) {
@@ -72,7 +72,7 @@ int is_bopomofo_collision_key( const char *key )
 void test_in_chinese_mode()
 {
 	ChewingContext *ctx;
-	int i;
+	size_t i;
 
 	chewing_Init( NULL, NULL );
 
@@ -86,9 +86,9 @@ void test_in_chinese_mode()
 		if ( is_bopomofo_collision_key( SPECIAL_SYMBOL_TABLE[i].token ) )
 			continue;
 
-		type_keystoke_by_string( ctx, SPECIAL_SYMBOL_TABLE[i].token );
+		type_keystroke_by_string( ctx, SPECIAL_SYMBOL_TABLE[i].token );
 		ok_preedit_buffer( ctx, SPECIAL_SYMBOL_TABLE[i].expected );
-		type_keystoke_by_string( ctx, "<E>" );
+		type_keystroke_by_string( ctx, "<E>" );
 		ok_commit_buffer( ctx, SPECIAL_SYMBOL_TABLE[i].expected );
 	}
 
@@ -99,7 +99,7 @@ void test_in_chinese_mode()
 void test_in_easy_symbol_mode()
 {
 	ChewingContext *ctx;
-	int i;
+	size_t i;
 
 	chewing_Init( NULL, NULL );
 
@@ -109,9 +109,9 @@ void test_in_easy_symbol_mode()
 	chewing_set_easySymbolInput( ctx, 1 );
 
 	for ( i = 0; i < ARRAY_SIZE( SPECIAL_SYMBOL_TABLE ); ++i ) {
-		type_keystoke_by_string( ctx, SPECIAL_SYMBOL_TABLE[i].token );
+		type_keystroke_by_string( ctx, SPECIAL_SYMBOL_TABLE[i].token );
 		ok_preedit_buffer( ctx, SPECIAL_SYMBOL_TABLE[i].expected );
-		type_keystoke_by_string( ctx, "<E>" );
+		type_keystroke_by_string( ctx, "<E>" );
 		ok_commit_buffer( ctx, SPECIAL_SYMBOL_TABLE[i].expected );
 	}
 
@@ -135,7 +135,7 @@ int is_fullshape_collision_key( const char *key )
 		"+",
 		"-",
 	};
-	int i;
+	size_t i;
 
 	for ( i = 0; i < ARRAY_SIZE( COLLISION_KEY ); ++i ) {
 		if ( strcmp( key, COLLISION_KEY[i] ) == 0 ) {
@@ -148,7 +148,7 @@ int is_fullshape_collision_key( const char *key )
 void test_in_fullshape_mode()
 {
 	ChewingContext *ctx;
-	int i;
+	size_t i;
 
 	chewing_Init( NULL, NULL );
 
@@ -164,7 +164,7 @@ void test_in_fullshape_mode()
 		if ( is_fullshape_collision_key( SPECIAL_SYMBOL_TABLE[i].token ) )
 			continue;
 
-		type_keystoke_by_string( ctx, SPECIAL_SYMBOL_TABLE[i].token );
+		type_keystroke_by_string( ctx, SPECIAL_SYMBOL_TABLE[i].token );
 		ok_preedit_buffer( ctx, "" );
 		ok_commit_buffer( ctx, SPECIAL_SYMBOL_TABLE[i].expected );
 	}

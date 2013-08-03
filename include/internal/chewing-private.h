@@ -32,14 +32,22 @@
 #define MAX_UTF8_SIZE 6
 #define ZUIN_SIZE 4
 #define PINYIN_SIZE 10
-#define MAX_PHRASE_LEN 10
+#define MAX_PHRASE_LEN 11
 #define MAX_PHONE_SEQ_LEN 50
+#define MIN_CHI_SYMBOL_LEN 0
+#define MAX_CHI_SYMBOL_LEN (MAX_PHONE_SEQ_LEN - MAX_PHRASE_LEN)
 #define MAX_INTERVAL ( ( MAX_PHONE_SEQ_LEN + 1 ) * MAX_PHONE_SEQ_LEN / 2 )
 #define MAX_CHOICE (567)
 #define MAX_CHOICE_BUF (50)                   /* max length of the choise buffer */
 #define N_HASH_BIT (14)
 #define HASH_TABLE_SIZE (1<<N_HASH_BIT)
 #define EASY_SYMBOL_KEY_TAB_LEN (36)
+
+/* For isSymbol */
+#define WORD_CHOICE            (0)
+#define SYMBOL_CATEGORY_CHOICE (1)
+#define SYMBOL_CHOICE_INSERT   (2)
+#define SYMBOL_CHOICE_UPDATE   (3)
 
 #ifndef _MSC_VER
 #undef max
@@ -226,6 +234,8 @@ typedef struct tag_ChewingData {
 
 	struct tag_HASH_ITEM *prev_userphrase;
 	ChewingStaticData static_data;
+	void (*logger)( void *data, int level, const char *fmt, ... );
+	void *loggerData;
 } ChewingData;
 
 typedef struct {

@@ -1,8 +1,12 @@
 This is libchewing.info, produced by makeinfo version 4.13 from
 libchewing.texi.
 
-This is the "libchewing Reference Manual" corresponding to libchewing
-version 0.3.4.
+INFO-DIR-SECTION Localization
+START-INFO-DIR-ENTRY
+* libchewing: (libchewing).           The libchewing reference manual.
+END-INFO-DIR-ENTRY
+   This is the "libchewing Reference Manual" corresponding to libchewing
+version 0.3.5.
 
    Copyright (C) 2012  libchewing Core Team
 
@@ -19,7 +23,7 @@ libchewing Reference Manual
 ***************************
 
 This is the "libchewing Reference Manual" corresponding to libchewing
-version 0.3.4.
+version 0.3.5.
 
    Copyright (C) 2012  libchewing Core Team
 
@@ -184,6 +188,47 @@ creates the context and deletes it after use.
      the resource.
 
      Do nothing if PTR is `NULL'.
+
+ -- Function: void chewing_set_logger (ChewingContext *CTX, void
+          (*LOGGER)(void *DATA, int LEVEL, const char *FMT, ... ), void
+          *DATA)
+     This function sets the logger function LOGGER. The logger function
+     is used to provide log inside Chewing IM for debugging. The DATA in
+     `chewing_set_logger' is passed directly to DATA in LOGGER when
+     logging. The following example shows how to use DATA:
+
+          void logger( void *data, int level, const char *fmt, ... )
+          {
+              FILE *fd = (FILE *) data;
+              ...
+          }
+
+          int main()
+          {
+              ChewingContext *ctx;
+              FILE *fd;
+              ...
+              chewing_set_logger(ctx, logger, fd);
+              ...
+          }
+
+     The LEVEL is log level. The symbolic names and their values are
+     listed as following:
+
+      -- Macro: int CHEWING_LOG_VERBOSE
+          Its value is `1'.
+
+      -- Macro: int CHEWING_LOG_DEBUG
+          Its value is `2'.
+
+      -- Macro: int CHEWING_LOG_INFO
+          Its value is `3'.
+
+      -- Macro: int CHEWING_LOG_WARN
+          Its value is `4'.
+
+      -- Macro: int CHEWING_LOG_ERROR
+          Its value is `5'.
 
 
 File: libchewing.info,  Node: Input Handling,  Next: Layout Settings,  Prev: Setup,  Up: Top
@@ -648,7 +693,22 @@ functions provide the configuration interfaces to the front-end.
           int N)
      This function sets the maximum number of the Chinese characters in
      the pre-edit buffer. If the pre-edit string is longer than this
-     number then the leading part will be committed automatically.
+     number then the leading part will be committed automatically. The
+     range of N shall between `MIN_CHI_SYMBOL_LEN' and
+     `MAX_CHI_SYMBOL_LEN'.
+
+ -- Marco: int MIN_CHI_SYMBOL_LEN
+     The minimal size of pre-edit buffer. Its value is `0'.
+
+ -- Marco: int MAX_CHI_SYMBOL_LEN
+     The maximum size of pre-edit buffer. Its value is
+     `MAX_PHONE_SEQ_LEN - MAX_PHRASE_LEN'.
+
+ -- Marco: int MAX_PHONE_SEQ_LEN
+     The size of internal buffer for pre-edit buffer. Its value is `50'.
+
+ -- Marco: int MAX_PHRASE_LEN
+     The maximum phrase size. Its value is `11'.
 
  -- Function: int chewing_get_maxChiSymbolLen (ChewingContext *CTX)
      This function returns the maximum number of the Chinese characters
@@ -732,15 +792,24 @@ Variable Index
  [index ]
 * Menu:
 
-* CHINESE_MODE:                          Operating Modes.      (line 11)
-* FULLSHAPE_MODE:                        Operating Modes.      (line 26)
-* HALFSHAPE_MODE:                        Operating Modes.      (line 27)
-* HSU_SELKEY_TYPE1:                      Candidates Behavior.  (line 36)
-* HSU_SELKEY_TYPE2:                      Candidates Behavior.  (line 37)
-* LIBCHEWING_ENCODING:                   Overview.             (line 24)
-* MAX_SELKEY:                            Candidates Behavior.  (line 15)
-* MIN_SELKEY:                            Candidates Behavior.  (line 19)
-* SYMBOL_MODE:                           Operating Modes.      (line 12)
+* CHEWING_LOG_DEBUG:                     Setup.               (line 131)
+* CHEWING_LOG_ERROR:                     Setup.               (line 140)
+* CHEWING_LOG_INFO:                      Setup.               (line 134)
+* CHEWING_LOG_VERBOSE:                   Setup.               (line 128)
+* CHEWING_LOG_WARN:                      Setup.               (line 137)
+* CHINESE_MODE:                          Operating Modes.     (line  11)
+* FULLSHAPE_MODE:                        Operating Modes.     (line  26)
+* HALFSHAPE_MODE:                        Operating Modes.     (line  27)
+* HSU_SELKEY_TYPE1:                      Candidates Behavior. (line  36)
+* HSU_SELKEY_TYPE2:                      Candidates Behavior. (line  37)
+* LIBCHEWING_ENCODING:                   Overview.            (line  24)
+* MAX_CHI_SYMBOL_LEN:                    Global Settings.     (line  21)
+* MAX_PHONE_SEQ_LEN:                     Global Settings.     (line  25)
+* MAX_PHRASE_LEN:                        Global Settings.     (line  28)
+* MAX_SELKEY:                            Candidates Behavior. (line  15)
+* MIN_CHI_SYMBOL_LEN:                    Global Settings.     (line  18)
+* MIN_SELKEY:                            Candidates Behavior. (line  19)
+* SYMBOL_MODE:                           Operating Modes.     (line  12)
 
 
 File: libchewing.info,  Node: Function Index,  Next: Concept Index,  Prev: Variable Index,  Up: Top
@@ -771,22 +840,22 @@ Function Index
 * chewing_cursor_Current:                Output Handling.     (line  75)
 * chewing_delete:                        Setup.               (line  61)
 * chewing_free:                          Setup.               (line  90)
-* chewing_get_addPhraseDirection:        Global Settings.     (line  28)
-* chewing_get_autoShiftCur:              Global Settings.     (line  61)
+* chewing_get_addPhraseDirection:        Global Settings.     (line  43)
+* chewing_get_autoShiftCur:              Global Settings.     (line  76)
 * chewing_get_candPerPage:               Candidates Behavior. (line  12)
 * chewing_get_ChiEngMode:                Operating Modes.     (line  23)
-* chewing_get_easySymbolInput:           Global Settings.     (line  78)
-* chewing_get_escCleanAllBuf:            Global Settings.     (line  53)
+* chewing_get_easySymbolInput:           Global Settings.     (line  93)
+* chewing_get_escCleanAllBuf:            Global Settings.     (line  68)
 * chewing_get_hsuSelKeyType:             Candidates Behavior. (line  45)
 * chewing_get_KBString:                  Layout Settings.     (line  23)
 * chewing_get_KBType:                    Layout Settings.     (line  18)
-* chewing_get_maxChiSymbolLen:           Global Settings.     (line  16)
+* chewing_get_maxChiSymbolLen:           Global Settings.     (line  31)
 * chewing_get_phoneSeq:                  Output Handling.     (line 120)
 * chewing_get_phoneSeqLen:               Output Handling.     (line 128)
-* chewing_get_phraseChoiceRearward:      Global Settings.     (line  86)
+* chewing_get_phraseChoiceRearward:      Global Settings.     (line 101)
 * chewing_get_selKey:                    Candidates Behavior. (line  30)
 * chewing_get_ShapeMode:                 Operating Modes.     (line  37)
-* chewing_get_spaceAsSelection:          Global Settings.     (line  42)
+* chewing_get_spaceAsSelection:          Global Settings.     (line  57)
 * chewing_handle_Backspace:              Input Handling.      (line  16)
 * chewing_handle_Capslock:               Input Handling.      (line  19)
 * chewing_handle_CtrlNum:                Input Handling.      (line  22)
@@ -822,19 +891,20 @@ Function Index
 * chewing_keystroke_CheckIgnore:         Output Handling.     (line  20)
 * chewing_new:                           Setup.               (line  54)
 * chewing_Reset:                         Setup.               (line  85)
-* chewing_set_addPhraseDirection:        Global Settings.     (line  21)
-* chewing_set_autoShiftCur:              Global Settings.     (line  57)
+* chewing_set_addPhraseDirection:        Global Settings.     (line  36)
+* chewing_set_autoShiftCur:              Global Settings.     (line  72)
 * chewing_set_candPerPage:               Candidates Behavior. (line   7)
 * chewing_set_ChiEngMode:                Operating Modes.     (line  17)
-* chewing_set_easySymbolInput:           Global Settings.     (line  65)
-* chewing_set_escCleanAllBuf:            Global Settings.     (line  46)
+* chewing_set_easySymbolInput:           Global Settings.     (line  80)
+* chewing_set_escCleanAllBuf:            Global Settings.     (line  61)
 * chewing_set_hsuSelKeyType:             Candidates Behavior. (line  41)
 * chewing_set_KBType:                    Layout Settings.     (line  11)
+* chewing_set_logger:                    Setup.               (line 104)
 * chewing_set_maxChiSymbolLen:           Global Settings.     (line  11)
-* chewing_set_phraseChoiceRearward:      Global Settings.     (line  82)
+* chewing_set_phraseChoiceRearward:      Global Settings.     (line  97)
 * chewing_set_selKey:                    Candidates Behavior. (line  24)
 * chewing_set_ShapeMode:                 Operating Modes.     (line  31)
-* chewing_set_spaceAsSelection:          Global Settings.     (line  36)
+* chewing_set_spaceAsSelection:          Global Settings.     (line  51)
 * chewing_zuin_Check:                    Output Handling.     (line  49)
 * chewing_zuin_String:                   Output Handling.     (line  62)
 
@@ -854,20 +924,20 @@ Concept Index
 
 
 Tag Table:
-Node: Top476
-Node: Overview1233
-Node: Glossary2612
-Node: Setup2877
-Node: Input Handling6217
-Node: Layout Settings9432
-Node: Operating Modes11954
-Node: Candidates Selection13323
-Node: Get Candidates13674
-Node: Candidates Behavior15724
-Node: Output Handling17505
-Node: Global Settings22559
-Node: Variable Index26037
-Node: Function Index26852
-Node: Concept Index33286
+Node: Top620
+Node: Overview1377
+Node: Glossary2756
+Node: Setup3021
+Node: Input Handling7563
+Node: Layout Settings10778
+Node: Operating Modes13300
+Node: Candidates Selection14669
+Node: Get Candidates15020
+Node: Candidates Behavior17070
+Node: Output Handling18851
+Node: Global Settings23905
+Node: Variable Index27884
+Node: Function Index29356
+Node: Concept Index35863
 
 End Tag Table

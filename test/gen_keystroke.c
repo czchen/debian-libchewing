@@ -241,10 +241,8 @@ void show_choose_buffer( int x, int y, ChewingContext *ctx )
 	}
 }
 
-void show_commit_string( ChewingContext *ctx )
+void show_commit_string( int x, int y, ChewingContext *ctx )
 {
-	static int x = 12;
-	static int y = 0;
 	char *commit_string;
 #if 0
 	if ( pgo->keystrokeRtn & KEYSTROKE_COMMIT ) {
@@ -411,6 +409,14 @@ int main( int argc, char *argv[] )
 				else
 					chewing_set_ShapeMode( ctx, FULLSHAPE_MODE );
 				break;
+			case KEY_NPAGE:
+				chewing_handle_PageDown( ctx );
+				fprintf( fout, "<PD>");
+				break;
+			case KEY_PPAGE:
+				chewing_handle_PageUp( ctx );
+				fprintf( fout, "<PU>");
+				break;
 			default:
 				chewing_handle_Default( ctx, (char) ch );
 				if ( ch != '<' && ch != '>' )
@@ -431,8 +437,8 @@ int main( int argc, char *argv[] )
 		mvaddstr( 9, 0, "Ctrl + d : leave" );
 		mvaddstr( 9, 20, "Ctrl + b : toggle Eng/Chi mode" );
 		mvaddstr( 10, 0, "F1, F2, F3, ..., F9 : Add user defined phrase");
-		mvaddstr( 11, 0, "Crtl + h : toggle Full/Half shape mode" );
-		show_commit_string( ctx );
+		mvaddstr( 11, 0, "Ctrl + h : toggle Full/Half shape mode" );
+		show_commit_string( 12, 0, ctx );
 		show_userphrase( 7, 12, ctx );
 		show_edit_buffer( 1, 0, ctx );
 	}

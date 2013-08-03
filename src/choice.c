@@ -29,16 +29,14 @@
 #include "tree-private.h"
 #include "userphrase-private.h"
 #include "choice-private.h"
-#include "private.h"
 #include "zuin-private.h"
-
-#define CEIL_DIV( a, b ) 	( ( a + b - 1 ) / b )
+#include "private.h"
 
 static void ChangeSelectIntervalAndBreakpoint(
 		ChewingData *pgdata,
 		int from,
 		int to,
-		char *str )
+		const char *str )
 {
 	int i;
 	int user_alloc;
@@ -125,7 +123,7 @@ static void SetAvailInfo( ChewingData *pgdata, int begin, int end)
 		}
 		else {
 			memcpy(
-				userPhoneSeq, 
+				userPhoneSeq,
 				&phoneSeq[ head_tmp ],
 				sizeof( uint16_t ) * ( diff + 1 ) ) ;
 			userPhoneSeq[ diff + 1 ] = 0;
@@ -149,12 +147,12 @@ static void SetAvailInfo( ChewingData *pgdata, int begin, int end)
 }
 
 /* FIXME: Improper use of len parameter */
-static int ChoiceTheSame( ChoiceInfo *pci, char *str, int len )
+static int ChoiceTheSame( ChoiceInfo *pci, const char *str, int len )
 {
 	int i;
 
 	for ( i = 0; i < pci->nTotalChoice; i++ )
-		if ( ! memcmp( pci->totalChoiceStr[ i ], str, len ) ) 
+		if ( ! memcmp( pci->totalChoiceStr[ i ], str, len ) )
 			return 1;
 	return 0;
 }
@@ -162,19 +160,22 @@ static int ChoiceTheSame( ChoiceInfo *pci, char *str, int len )
 static void ChoiceInfoAppendChi( ChewingData *pgdata,  ChoiceInfo *pci, uint16_t phone )
 {
 	Word tempWord;
-	GetCharFirst( pgdata, &tempWord, phone );
-	do {
-		if ( ChoiceTheSame( pci, tempWord.word,
-		                    ueBytesFromChar( tempWord.word[ 0 ] ) * sizeof( char ) ) )
-			continue;
-		memcpy( 
-			pci->totalChoiceStr[ pci->nTotalChoice ],
-			tempWord.word, ueBytesFromChar( tempWord.word[ 0 ] ) * sizeof( char ) );
-		assert( pci->nTotalChoice <= MAX_CHOICE );
-		pci->totalChoiceStr[ pci->nTotalChoice ]
-		                   [ ueBytesFromChar( tempWord.word[ 0 ] ) ] = '\0';
-		pci->nTotalChoice++;
-	} while ( GetCharNext( pgdata, &tempWord ) );
+	int len;
+	if ( GetCharFirst( pgdata, &tempWord, phone ) ) {
+		do {
+			len = ueBytesFromChar( tempWord.word[ 0 ] );
+			if ( ChoiceTheSame( pci, tempWord.word,
+					    len) )
+				continue;
+			assert( pci->nTotalChoice < MAX_CHOICE );
+			memcpy(
+				pci->totalChoiceStr[ pci->nTotalChoice ],
+				tempWord.word, len );
+			pci->totalChoiceStr[ pci->nTotalChoice ]
+					   [ len ] = '\0';
+			pci->nTotalChoice++;
+		} while ( GetCharNext( pgdata, &tempWord ) );
+	}
 }
 
 /** @brief Loading all possible phrases of certain length.
@@ -199,7 +200,7 @@ static void SetChoiceInfo( ChewingData *pgdata )
 
 	/* Clears previous candidates. */
 	memset( pci->totalChoiceStr, '\0',
-		sizeof(char) * MAX_CHOICE * MAX_PHRASE_LEN * MAX_UTF8_SIZE + 1);
+		MAX_CHOICE * MAX_PHRASE_LEN * MAX_UTF8_SIZE + 1);
 
 	pci->nTotalChoice = 0;
 	len = pai->avail[ pai->currentAvail ].len;
@@ -286,10 +287,10 @@ static void SetChoiceInfo( ChewingData *pgdata )
 		if ( pai->avail[ pai->currentAvail ].id != -1 ) {
 			GetPhraseFirst( pgdata, &tempPhrase, pai->avail[ pai->currentAvail ].id );
 			do {
-				if ( ChoiceTheSame( 
-					pci, 
-					tempPhrase.phrase, 
-					len * ueBytesFromChar( tempPhrase.phrase[0] ) * sizeof( char ) ) ) {
+				if ( ChoiceTheSame(
+					pci,
+					tempPhrase.phrase,
+					len * ueBytesFromChar( tempPhrase.phrase[0] ) ) ) {
 					continue;
 				}
 				ueStrNCpy( pci->totalChoiceStr[ pci->nTotalChoice ],
@@ -304,10 +305,10 @@ static void SetChoiceInfo( ChewingData *pgdata )
 		if ( pUserPhraseData ) {
 			do {
 				/* check if the phrase is already in the choice list */
-				if ( ChoiceTheSame( 
-					pci, 
-					pUserPhraseData->wordSeq, 
-					len * ueBytesFromChar( pUserPhraseData->wordSeq[0] ) * sizeof( char ) ) )
+				if ( ChoiceTheSame(
+					pci,
+					pUserPhraseData->wordSeq,
+					len * ueBytesFromChar( pUserPhraseData->wordSeq[0] ) ) )
 					continue;
 				/* otherwise store it */
 				ueStrNCpy(
@@ -315,7 +316,7 @@ static void SetChoiceInfo( ChewingData *pgdata )
 						pUserPhraseData->wordSeq,
 						len, 1);
 				pci->nTotalChoice++;
-			} while ( ( pUserPhraseData = 
+			} while ( ( pUserPhraseData =
 				    UserGetPhraseNext( pgdata, userPhoneSeq ) ) != NULL );
 		}
 
@@ -323,8 +324,10 @@ static void SetChoiceInfo( ChewingData *pgdata )
 
 	/* magic number */
 	pci->nChoicePerPage = candPerPage;
+	assert( pci->nTotalChoice > 0 );
 	pci->nPage = CEIL_DIV( pci->nTotalChoice, pci->nChoicePerPage );
 	pci->pageNo = 0;
+	pci->isSymbol = WORD_CHOICE;
 }
 
 /*
@@ -335,7 +338,7 @@ static int SeekPhraseHead( ChewingData *pgdata )
 	int i;
 	int phoneSeq = PhoneSeqCursor( pgdata );
 	for ( i = pgdata->nPrefer - 1; i >= 0; i-- ) {
-		if ( pgdata->preferInterval[ i ].from > phoneSeq 
+		if ( pgdata->preferInterval[ i ].from > phoneSeq
 				|| pgdata->preferInterval[ i ].to < phoneSeq )
 			continue;
 		return pgdata->preferInterval[ i ].from;
@@ -379,7 +382,7 @@ int ChoiceFirstAvail( ChewingData *pgdata )
 int ChoicePrevAvail( ChewingContext *ctx )
 {
 	ChewingData *pgdata = ctx->data;
-	if (pgdata->choiceInfo.isSymbol) return 0;
+	if (pgdata->choiceInfo.isSymbol != WORD_CHOICE) return 0;
 	if ( ++( pgdata->availInfo.currentAvail ) >= pgdata->availInfo.nAvail )
 		pgdata->availInfo.currentAvail = 0;
 	SetChoiceInfo( pgdata );
@@ -387,7 +390,7 @@ int ChoicePrevAvail( ChewingContext *ctx )
 }
 
 /** @brief Return the next phrase not longer than the previous phrase. */
-int ChoiceNextAvail( ChewingData *pgdata ) 
+int ChoiceNextAvail( ChewingData *pgdata )
 {
 	if (pgdata->choiceInfo.isSymbol) return 0;
 	if ( --( pgdata->availInfo.currentAvail ) < 0 )
@@ -402,11 +405,12 @@ int ChoiceEndChoice( ChewingData *pgdata )
 	pgdata->choiceInfo.nTotalChoice = 0;
 	pgdata->choiceInfo.nPage = 0;
 
-	if ( pgdata->choiceInfo.isSymbol != 1 || pgdata->choiceInfo.isSymbol != 2 ) {
+	if ( pgdata->choiceInfo.isSymbol != WORD_CHOICE || pgdata->choiceInfo.isSymbol != SYMBOL_CHOICE_INSERT ) {
 		/* return to the old chiSymbolCursor position */
 		pgdata->chiSymbolCursor = pgdata->choiceInfo.oldChiSymbolCursor;
+		assert ( pgdata->chiSymbolCursor <= pgdata->chiSymbolBufLen );
 	}
-	pgdata->choiceInfo.isSymbol = 0;
+	pgdata->choiceInfo.isSymbol = WORD_CHOICE;
 	return 0;
 }
 
@@ -415,17 +419,17 @@ static void ChangeUserData( ChewingData *pgdata, int selectNo )
 	uint16_t userPhoneSeq[ MAX_PHONE_SEQ_LEN ];
 	int len;
 
-	len = ueStrLen( pgdata->choiceInfo.totalChoiceStr[ selectNo ] ); 
+	len = ueStrLen( pgdata->choiceInfo.totalChoiceStr[ selectNo ] );
 	memcpy(
-		userPhoneSeq, 
-		&( pgdata->phoneSeq[ PhoneSeqCursor( pgdata ) ] ), 
+		userPhoneSeq,
+		&( pgdata->phoneSeq[ PhoneSeqCursor( pgdata ) ] ),
 		len * sizeof( uint16_t ) );
 	userPhoneSeq[ len ] = 0;
 	UserUpdatePhrase( pgdata, userPhoneSeq, pgdata->choiceInfo.totalChoiceStr[ selectNo ] );
 }
 
 /** @brief commit the selected phrase. */
-int ChoiceSelect( ChewingData *pgdata, int selectNo ) 
+int ChoiceSelect( ChewingData *pgdata, int selectNo )
 {
 	ChoiceInfo *pci = &( pgdata->choiceInfo );
 	AvailInfo *pai = &( pgdata->availInfo );
