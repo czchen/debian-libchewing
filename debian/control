@@ -4,19 +4,17 @@ Priority: optional
 Maintainer: IME Packaging Team <pkg-ime-devel@lists.alioth.debian.org>
 Uploaders: Kan-Ru Chen (陳侃如) <koster@debian.org>,
            Andrew Lee (李健秋) <ajqlee@debian.org>,
-           YunQiang Su <wzssyqa@gmail.com>
+           YunQiang Su <wzssyqa@gmail.com>,
+           ChangZhuo Chen (陳昌倬) <czchen@gmail.com>
 Build-Depends: autotools-dev,
-               check,
                debhelper (>= 9),
                dh-autoreconf,
-               doxygen,
                gcc (>= 3:3.3),
-               graphviz,
                libncursesw5-dev,
                libtool (>= 1.5.6),
                pkg-config
 Standards-Version: 3.9.4
-Homepage: http://chewing.csie.net
+Homepage: http://chewing.im
 Vcs-Git: git://anonscm.debian.org/pkg-ime/libchewing.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-ime/libchewing.git;a=summary
 

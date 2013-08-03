@@ -80,6 +80,7 @@ libchewing.so.3 libchewing3 #MINVER#
  chewing_set_easySymbolInput@Base 0.3.4
  chewing_set_escCleanAllBuf@Base 0.3.4
  chewing_set_hsuSelKeyType@Base 0.3.4
+ chewing_set_logger@Base 0.3.5
  chewing_set_maxChiSymbolLen@Base 0.3.4
  chewing_set_phraseChoiceRearward@Base 0.3.4
  chewing_set_selKey@Base 0.3.4
