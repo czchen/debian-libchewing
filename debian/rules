@@ -11,6 +11,11 @@ override_dh_auto_configure:
 override_dh_strip:
 	dh_strip --dbg-package=libchewing3-dbg
 
+override_dh_auto_clean:
+	-rm doc/libchewing.info
+	-rm doc/stamp-vti
+	-rm doc/version.texi
+
 override_dh_auto_test:
 
 %:
