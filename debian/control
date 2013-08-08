@@ -12,7 +12,8 @@ Build-Depends: autotools-dev,
                gcc (>= 3:3.3),
                libncursesw5-dev,
                libtool (>= 1.5.6),
-               pkg-config
+               pkg-config,
+               texinfo
 Standards-Version: 3.9.4
 Homepage: http://chewing.im
 Vcs-Git: git://anonscm.debian.org/pkg-ime/libchewing.git
