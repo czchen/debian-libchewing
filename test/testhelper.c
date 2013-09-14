@@ -122,11 +122,26 @@ int get_keystroke( get_char_func get_char, void * param )
 				case 'S':
 					if ( ( ch = get_char( param ) ) == 'L' )
 						result = KEY_SLEFT;
-					else
+					else if ( ch == 'R' )
 						result = KEY_SRIGHT;
+					else
+						result = KEY_SSPACE;
 					break;
 				case 'T':
-					result = KEY_TAB;
+					if ( ( ch = get_char( param ) ) == '>' )
+						return result = KEY_TAB;
+					else
+						result = KEY_DBLTAB;
+					break;
+				case 'P':
+					if ( ( ch = get_char( param ) ) == 'D' )
+						result = KEY_NPAGE;
+					else
+						result = KEY_PPAGE;
+					break;
+				case 'N':
+					ch = get_char( param );
+					result = KEY_NUMPAD_BASE + ch;
 					break;
 			}
 		}
@@ -134,68 +149,83 @@ int get_keystroke( get_char_func get_char, void * param )
 	return result = END;
 }
 
-static void type_keystoke( ChewingContext *ctx, get_char_func get_char, void *param )
+void type_single_keystroke( ChewingContext *ctx, int ch )
+{
+	switch ( ch ) {
+		case KEY_LEFT:
+			chewing_handle_Left( ctx );
+			break;
+		case KEY_SLEFT:
+			chewing_handle_ShiftLeft( ctx );
+			break;
+		case KEY_RIGHT:
+			chewing_handle_Right( ctx );
+			break;
+		case KEY_SRIGHT:
+			chewing_handle_ShiftRight( ctx );
+			break;
+		case KEY_UP:
+			chewing_handle_Up( ctx );
+			break;
+		case KEY_DOWN:
+			chewing_handle_Down( ctx );
+			break;
+		case KEY_SPACE:
+			chewing_handle_Space( ctx );
+			break;
+		case KEY_ENTER:
+			chewing_handle_Enter( ctx );
+			break;
+		case KEY_BACKSPACE:
+			chewing_handle_Backspace( ctx );
+			break;
+		case KEY_ESC:
+			chewing_handle_Esc( ctx );
+			break;
+		case KEY_DELETE:
+			chewing_handle_Del( ctx );
+			break;
+		case KEY_HOME:
+			chewing_handle_Home( ctx );
+			break;
+		case KEY_END:
+			chewing_handle_End( ctx );
+			break;
+		case KEY_TAB:
+			chewing_handle_Tab( ctx );
+			break;
+		case KEY_CAPSLOCK:
+			chewing_handle_Capslock( ctx );
+			break;
+		case KEY_NPAGE:
+			chewing_handle_PageDown( ctx );
+			break;
+		case KEY_PPAGE:
+			chewing_handle_PageUp( ctx );
+			break;
+		case KEY_SSPACE:
+			chewing_handle_ShiftSpace( ctx );
+			break;
+		case KEY_DBLTAB:
+			chewing_handle_DblTab( ctx );
+			break;
+		default:
+			if ( KEY_CTRL_BASE <= ch && ch < KEY_NUMPAD_BASE)
+				chewing_handle_CtrlNum( ctx, ch - KEY_CTRL_BASE );
+			else if ( KEY_NUMPAD_BASE <= ch )
+				chewing_handle_Numlock( ctx, ch - KEY_NUMPAD_BASE );
+			else
+				chewing_handle_Default( ctx, (char) ch );
+			break;
+	}
+}
+
+static void type_keystroke( ChewingContext *ctx, get_char_func get_char, void *param )
 {
 	int ch;
-	int ctrl_shifted;
 
-	while ( ( ch = get_keystroke( get_char, param ) ) != END ) {
-		switch ( ch ) {
-			case KEY_LEFT:
-				chewing_handle_Left( ctx );
-				break;
-			case KEY_SLEFT:
-				chewing_handle_ShiftLeft( ctx );
-				break;
-			case KEY_RIGHT:
-				chewing_handle_Right( ctx );
-				break;
-			case KEY_SRIGHT:
-				chewing_handle_ShiftRight( ctx );
-				break;
-			case KEY_UP:
-				chewing_handle_Up( ctx );
-				break;
-			case KEY_DOWN:
-				chewing_handle_Down( ctx );
-				break;
-			case KEY_SPACE:
-				chewing_handle_Space( ctx );
-				break;
-			case KEY_ENTER:
-				chewing_handle_Enter( ctx );
-				break;
-			case KEY_BACKSPACE:
-				chewing_handle_Backspace( ctx );
-				break;
-			case KEY_ESC:
-				chewing_handle_Esc( ctx );
-				break;
-			case KEY_DELETE:
-				chewing_handle_Del( ctx );
-				break;
-			case KEY_HOME:
-				chewing_handle_Home( ctx );
-				break;
-			case KEY_END:
-				chewing_handle_End( ctx );
-				break;
-			case KEY_TAB:
-				chewing_handle_Tab( ctx );
-				break;
-			case KEY_CAPSLOCK:
-				chewing_handle_Capslock( ctx );
-				break;
-			default:
-				ctrl_shifted = ( ch - KEY_CTRL_BASE );
-				if ( ( ctrl_shifted >= '0' ) && ( ctrl_shifted <= '9' ) ) {
-					chewing_handle_CtrlNum( ctx, ctrl_shifted );
-				} else {
-					chewing_handle_Default( ctx, (char) ch );
-				}
-				break;
-		}
-	}
+	while ( ( ch = get_keystroke( get_char, param ) ) != END )
+		type_single_keystroke( ctx, ch );
 }
 
 static int get_char_by_string( void * param )
@@ -240,9 +270,9 @@ void internal_ok( const char *file, int line, int test, const char * test_txt,
 	}
 }
 
-void type_keystoke_by_string( ChewingContext *ctx, char* keystoke )
+void type_keystroke_by_string( ChewingContext *ctx, char* keystroke )
 {
-	type_keystoke( ctx, get_char_by_string, &keystoke );
+	type_keystroke( ctx, get_char_by_string, &keystroke );
 }
 
 void internal_ok_buffer( const char *file, int line, ChewingContext *ctx,
@@ -330,7 +360,7 @@ void internal_ok_candidate( const char *file, int line,
 	chewing_free( buf );
 }
 
-void internal_ok_keystoke_rtn( const char *file, int line,
+void internal_ok_keystroke_rtn( const char *file, int line,
 	ChewingContext *ctx, int rtn )
 {
 	const struct {
@@ -342,7 +372,7 @@ void internal_ok_keystoke_rtn( const char *file, int line,
 		// No function to check KEYSTROKE_BELL
 		{ KEYSTROKE_ABSORB, chewing_keystroke_CheckAbsorb },
 	};
-	int i;
+	size_t i;
 	int actual;
 	int expected;
 
@@ -357,7 +387,7 @@ void internal_ok_keystoke_rtn( const char *file, int line,
 	}
 }
 
-int internal_has_userphrase( const char *file, int line,
+int internal_has_userphrase( const char *file UNUSED, int line UNUSED,
 	ChewingContext *ctx, const char *bopomofo, const char *phrase )
 {
 	uint16_t *phone = NULL;
@@ -387,7 +417,7 @@ int internal_has_userphrase( const char *file, int line,
 	}
 
 	while ( ( item = HashFindPhonePhrase( ctx->data, phone, item ) ) != NULL ) {
-		if ( strcmp( item->data.wordSeq, phrase ) == 0 ) {
+		if ( phrase == NULL || strcmp( item->data.wordSeq, phrase ) == 0 ) {
 			ret = 1;
 			goto end;
 		}

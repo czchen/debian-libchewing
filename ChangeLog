@@ -1,3 +1,886 @@
+2013-07-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* NEWS: NEWS: finalize release 0.3.5
+
+2013-07-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, configure.ac: Bump version to 0.3.5
+
+2013-07-27  ChangZhuo Chen <czchen@gmail.com>
+
+	* NEWS: Update NEWS
+
+2013-07-26  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/tree.c: Let comment of TreeFindPhrase() and its parameter name
+	be consistent.  Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-25  ChangZhuo Chen <czchen@gmail.com>
+
+	* Makefile.am, src/tools/Makefile.am: Revert "Link to libcommon.la
+	in sort" CFLAGS for lib and tools are different, so we cannot link sort to
+	libcommon.la.  This reverts commit 5c216ecfea9db455cc2969597c1a210e16a47312.
+
+2013-07-25  ChangZhuo Chen <czchen@gmail.com>
+
+	* Makefile.am, src/tools/Makefile.am: Link to libcommon.la in sort
+
+2013-07-24  ChangZhuo Chen <czchen@gmail.com>
+
+	* README: Update README for CI services
+
+2013-07-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* .travis.yml: Use coveralls.io to generate coverage report Closed #60
+
+2013-07-23  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, src/tools/sort.c: Fix cmake include directories
+
+2013-07-23  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Merge pull request #61 from kito-cheng/master Make tsi.src use consistent separator
+
+2013-07-18  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/private.h, src/tools/sort.c: Fix dangerous memory usage for
+	WordData and sscanf.  Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-22  Jim Huang <jserv@0xlab.org>
+
+	* src/tools/sort.c: tools: sort: Fix build failure
+
+2013-07-21  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/tools/sort.c: Let compare_phrase() use ARRAY_SIZE for length
+	of a->phone.  Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/phone.cin, data/tsi.src: Mark 腕(ㄨㄢˇ) as non official
+	phone
+
+2013-07-20  Jim Huang <jserv@0xlab.org>
+
+	* README: README: Add section 'External and unmerged projects'
+
+2013-07-20  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: NEWS: mention FreeArray as the successful story
+
+2013-07-20  Jim Huang <jserv@0xlab.org>
+
+	* AUTHORS: Add kito in author list
+
+2013-07-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Merge pull request #59 from kito-cheng/master Clean up and rewrite FindEasySymbolIndex
+
+2013-07-15  Kito Cheng <kito@0xlab.org>
+
+	* src/hash.c: Make HashItem2Binary, ReadHashItem_txt,
+	_load_hash_file static
+
+2013-07-15  Kito Cheng <kito@0xlab.org>
+
+	* src/chewingutil.c: Refine FindEasySymbolIndex  - Compute the index instead of binary search.
+
+2013-07-15  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* test/gen_keystroke.c: Let show_commit_string() have the same
+	parameters as other show* functions.  Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-14  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* test/gen_keystroke.c: test: Fix typo (Ctrl+h) Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-13  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* include/internal/char-private.h: Modify number constant 7 to
+	comprehensive macro expression.  Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Merge pull request #58 from kito-cheng/master Clean up and refactor
+
+2013-07-12  Kito Cheng <kito@0xlab.org>
+
+	* src/zuin.c: Refine DACHENCP26PhoInput
+
+2013-07-12  Kito Cheng <kito@0xlab.org>
+
+	* src/chewingutil.c: Refine SetUpdatePhraseMsg
+
+2013-07-12  Kito Cheng <kito@0xlab.org>
+
+	* src/chewingio.c, src/chewingutil.c, test/randkeystroke.c,
+	test/test-bopomofo.c, test/test-config.c, test/test-easy-symbol.c,
+	test/test-fullshape.c, test/test-key2pho.c, test/test-keyboard.c,
+	test/test-logger.c, test/test-mmap.c, test/test-regression.c,
+	test/test-special-symbol.c, test/test-symbol.c, test/test-utf8.c,
+	test/testchewing.c, test/testhelper.c: Eliminate the warnings for
+	different sign and unused arguments.
+
+2013-07-12  Kito Cheng <kito@0xlab.org>
+
+	* include/internal/chewingutil.h,
+	include/internal/pinyin-private.h, src/chewingio.c,
+	src/chewingutil.c, src/choice.c, src/common/chewing-utf8-util.c,
+	src/common/key2pho.c, src/mod_aux.c, src/pinyin.c, src/tree.c,
+	src/zuin.c: Add const as possible
+
+2013-07-12  Kito Cheng <kito@0xlab.org>
+
+	* include/internal/chewing-utf8-util.h,
+	src/common/chewing-utf8-util.c: Add ueConstStrSeek for seek const
+	utf-8 string
+
+2013-07-12  Kito Cheng <kito@0xlab.org>
+
+	* src/chewingutil.c, src/choice.c, src/mod_aux.c: Clean up
+	sizeof(char) since it's always 1 by ANSI C standards.
+
+2013-07-12  Kito Cheng <kito@0xlab.org>
+
+	* src/chewingio.c, src/chewingutil.c, src/hash.c, src/pinyin.c,
+	src/tree.c, src/userphrase.c, src/zuin.c: Clean up #if 0/#endif code
+	sections  - It's time to release souls from purgatory, those    code are hold at least 3 years ago...
+
+2013-07-12  Kito Cheng <kito@0xlab.org>
+
+	* src/chewingio.c: Check return code for InitHash in chewing_new
+
+2013-07-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* .editorconfig: Add .editorconfig (http://editorconfig.org/)
+
+2013-07-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Merge pull request #57 from kito-cheng/master Few clean up
+
+2013-07-10  Kito Cheng <kito@0xlab.org>
+
+	* src/tools/sort.c, test/testhelper.c: Eliminate the warnings for
+	different sign
+
+2013-07-10  Kito Cheng <kito@0xlab.org>
+
+	* src/char.c, src/chewingio.c, src/chewingutil.c, src/choice.c,
+	src/common/key2pho.c, src/hash.c, src/mod_aux.c, src/pinyin.c,
+	src/porting_layer/src/plat_mmap_posix.c, src/tools/maketree.c,
+	src/tree.c, src/userphrase.c, src/zuin.c: Clean up trailing
+	whitespace
+
+2013-07-06  ChangZhuo Chen <czchen@gmail.com>
+
+	* configure.ac: Remove unused HAVE_DECL_RTLD_NEXT check
+
+2013-07-06  Jim Huang <jserv@0xlab.org>
+
+	* .gitignore: .gitignore: Update for test suite output
+
+2013-07-06  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: Update NEWS
+
+2013-07-06  Jim Huang <jserv@0xlab.org>
+
+	* src/chewingutil.c: asprintf is provided by GNU extensions and *BSD
+
+2013-07-06  Jim Huang <jserv@0xlab.org>
+
+	* src/hash.c: migrate_hash_to_bin: simplify the usage of parameter
+
+2013-07-05  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/memory-private.h: Fix Visual Studio compiling
+	error
+
+2013-07-05  Jim Huang <jserv@0xlab.org>
+
+	* src/chewingutil.c: Eliminate the warnings
+
+2013-07-05  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/chewingutil.c: Remove redundant candPerPage variable.
+
+2013-07-05  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* include/internal/zuin-private.h, src/chewingio.c, src/zuin.c: Fix
+	redundant pZuin parameters.
+
+2013-07-05  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/char.c: Fix wrd_ptr->word to wrd_ptr->word[0] for Str2Word(),
+	considering type consistency.
+
+2013-07-05  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/chewingutil.c: Add const qualifier for keybuf[] & chibuf[] in
+	SpecialSymbolInput()
+
+2013-07-03  Jim Huang <jserv@0xlab.org>
+
+	* AUTHORS: Update contributor list Added: Hialan Liu and Bo-cheng Jan
+
+2013-07-02  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* include/mod_aux.h: Fix typo in chewing_commit_Check() description Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-02  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* include/mod_aux.h: mod_aux.h: Fix typo in filename declaration Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-03  Bo-cheng Jan <school510587@yahoo.com.tw>
+
+	* src/choice.c: Fix assert() condition for ChoiceInfoAppendChi() Signed-off-by: Jim Huang <jserv@0xlab.org>
+
+2013-07-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/char.c, src/dict.c: Fix --disable-binary-data missing include
+
+2013-07-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/dict.c: Fix missing include
+
+2013-07-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/char.c, src/chewingutil.c, src/choice.c,
+	src/common/key2pho.c, src/dict.c, src/hash.c, src/mod_aux.c,
+	src/pinyin.c, src/porting_layer/include/plat_path.h,
+	src/tools/maketree.c, src/userphrase.c, src/zuin.c: Cleanup include According to include-what-you-use [1], several includes are
+	unnecessary, so we just remove them.  [1] https://code.google.com/p/include-what-you-use/
+
+2013-06-27  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Add line number in error message
+
+2013-06-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Add 電波 (ㄉㄧㄢˋ ㄆㄛ)
+
+2013-06-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Add 鑰匙 (ㄧㄠˋ ㄕ˙) family
+
+2013-06-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Add 尋短 (ㄒㄩㄣˊ ㄉㄨㄢˇ)
+
+2013-06-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Add phrases for 埔(ㄆㄨˇ)
+
+2013-06-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/phone.cin, data/tsi.src: Remove 學(ㄒㄧㄠˊ) and 学
+
+2013-06-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, configure.ac, test/Makefile.am,
+	test/test-memory-fail.c: Remove test-memory-fail test-memory-fail uses --wrap option to replace standard
+	malloc/calloc with customized one with fail countdown. In this way,
+	we can emulate malloc/calloc fails to test error handling in
+	libchewing.  However, in platform like FreeBSD, we also replace the
+	malloc/calloc used in fscanf, and fscanf will abort the test when
+	malloc/calloc fail.  Since we do not find a suitable way to test malloc/calloc failure in
+	FreeBSD, and malloc/calloc fails is very rare case in system, the
+	test-memory-fail is removed.  Closed #43
+
+2013-06-25  ChangZhuo Chen <czchen@gmail.com>
+
+	* configure.ac: Fix indent
+
+2013-06-24  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, cmake/config.h.in, configure.ac,
+	include/internal/memory-private.h, src/common/Makefile.am,
+	src/common/memory.c: Inline memory access function
+
+2013-06-24  Jim Huang <jserv@0xlab.org>
+
+	* README: Classify the build dependency
+
+2013-06-24  ChangZhuo Chen <czchen@gmail.com>
+
+	* README: Update README for tools version, CI service
+
+2013-06-24  ChangZhuo Chen <czchen@gmail.com>
+
+	* README: Add minimal build tools requirement
+
+2013-06-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* configure.ac, src/Makefile.am: Use -version-number in libtool -version-info uses CURRENT/REVISION/AGE format, which is buggy in
+	BSD family [1] and it is not the same as cmake MAJOR/MINOR/REVISION
+	format.  Using -version-number to replace -version-info can solve
+	both the problems.  Closed #55 [1]
+	https://lists.gnu.org/archive/html/bug-libtool/2011-05/msg00007.html
+
+2013-06-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* .travis.yml: Fix travis-ci address sanitizer build
+
+2013-06-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Add option NO_UNDEFINED to disable --no-undefined When using address sanitizer, several symbols are added to object
+	files.  If linking them with `-Wl,--no-undefined', the linking will
+	fail due to undefined symbols. The option NO_UNDEFINED is added to
+	disable `-Wl,--no-undefined'.
+
+2013-06-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Merge compiler configuration for GNU and Clang
+
+2013-06-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, src/Makefile.am: Add LDFLAG -Wl,--no-undefined The LDFLAG `-Wl,--no-undefined' will cause linker to report any
+	unresolved symbols when linking libchewing.so, which is good because
+	libchewing.so shall not contain any resolved symbols at all.  The original `-no-undefined' does not do this job in GNU/Linux, see
+	[1] for more information.  [1] http://lists.gnu.org/archive/html/libtool/2009-03/msg00026.html
+
+2013-06-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* : commit 6e17848d3ce91f89bf7b30abb8e235bb2b327f7a Author:
+	ChangZhuo Chen <czchen@gmail.com> Date:   Thu Jun 20 23:56:01 2013
+	+0800
+
+2013-06-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, Makefile.am, include/internal/memory-private.h,
+	src/common/Makefile.am, src/common/memory.c, src/dict.c, src/hash.c: 
+	Prevent unaligned memory access Certain platforms (ex: Sparc[1]) have memory alignment restrict. A
+	misaligned memory access will casue bus error. In order to prevent
+	it, several helper functions are added to access unaligned memory.  Closed #53 [1] http://docs.oracle.com/cd/E19253-01/816-4854/hwovr-2/index.html
+
+2013-06-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* .travis.yml: Add address sanitizer check in travis-ci
+
+2013-06-04  ChangZhuo Chen <czchen@gmail.com>
+
+	* Makefile.am: Add cmake/version.texi.in to EXTRA_DIST
+
+2013-05-29  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi: Add document for chewing_set_logger
+
+2013-05-24  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/chewingio.h, include/global.h,
+	include/internal/chewing-private.h, src/chewingio.c, src/private.h,
+	test/test-logger.c: Add log level
+
+2013-05-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, CMakeLists.txt, test/Makefile.am, test/test-logger.c: 
+	Add unit test for logger
+
+2013-05-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, cmake/config.h.in, configure.ac,
+	include/chewingio.h, include/internal/chewing-private.h,
+	src/chewingio.c, src/chewingutil.c, src/hash.c, src/private.h,
+	src/tree.c: Add new API chewing_set_logger
+
+2013-05-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, cmake/config.h.in: Fix cmake check for integer
+	related headers
+
+2013-05-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/phone.cin: Fix misplace word
+
+2013-05-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi, include/internal/chewing-private.h,
+	src/chewingio.c, src/chewingutil.c, test/test-config.c: Change
+	default maxChiSymbolLen to 39
+
+2013-05-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-config.c: Update test message
+
+2013-05-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Add USE_VALGRIND option in cmake
+
+2013-05-17  Jim Huang <jserv@0xlab.org>
+
+	* src/private.h: Rewrite macro STATIC_ASSERT to avoid recent GCC
+	warnings Reference:   http://www.pixelbeat.org/programming/gcc/static_assert.html
+
+2013-05-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/chewingutil.c, test/test-userphrase.c: Fix
+	NoSymbolBetween() Closed #46
+
+2013-05-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-userphrase.c: Fix indent
+
+2013-05-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test case for selecting 4-bytes UTF8
+
+2013-05-13  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test case for phoneSeq API
+
+2013-05-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi, src/chewingio.c, src/chewingutil.c,
+	test/test-config.c: Reduce maxChiSymbolLen to 39 to avoid overflow The current preedit buffer size is MAX_PHONE_SEQ_LEN. libchewing
+	needs to auto commit preedit buffer before reaching
+	MAX_PHONE_SEQ_LEN.  However, the original auto commit threshold,
+	MAX_PHONE_SEQ_LEN - 1, is not okay because in worst case, the
+	preedit buffer might increase MAX_PHRASE_LEN at once. In this case,
+	libchewing crashes due to buffer overflow.  In order to fix the issue, we reduce the maximum value of
+	maxChiSymbolLen to MAX_PHONE_SEQ_LEN - MAX_PHRASE_LEN = 39, so in
+	worst case, libchewing still have enough preedit buffer.  Fixed #52
+
+2013-05-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-config.c: Add test case for maxChiSymbolLen
+
+2013-05-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c: Add assert
+
+2013-05-10  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c: Add assert
+
+2013-04-25  Jim Huang <jserv@0xlab.org>
+
+	* README: README: mention LGPL explicitly
+
+2013-04-25  Jim Huang <jserv@0xlab.org>
+
+	* README: README: OXIM is inactive actually
+
+2013-04-25  ChangZhuo Chen <czchen@gmail.com>
+
+	* README: Add cmake to README
+
+2013-04-19  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Store index in word for stable sort In FreeBSD, the compare function for qsort() cannot use address to
+	implement stable sort because the address passed to compare function
+	is not the original one. Thus we change to use index instead of
+	address to implement stable sort.  See [1] for more information.  [1]
+
+	https://groups.google.com/d/msg/chewing-devel/cUovLo0zGuc/-t2S3OfMDcYJ
+
+2013-04-13  ChangZhuo Chen <czchen@gmail.com>
+
+	* doc/libchewing.texi, src/chewingio.c, src/chewingutil.c,
+	test/test-config.c: Modify chewing_set_maxChiSymbolLen to fix #50 The original chewing_set_maxChiSymbolLen adds ZUIN_SIZE when
+	determine if auto commit is needed. It is ambiguous because user
+	expects the value set by chewing_set_maxChiSymbolLen is the maximum
+	character/symbol in preedit buffer. By removing ZUIN_SIZE, the
+	behavior is the same as user expectation.
+
+2013-03-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-userphrase.c: Add test cases for auto learn phrase
+
+2013-03-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore, CMakeLists.txt, test/Makefile.am,
+	test/test-bopomofo.c, test/test-userphrase.c: Move userphrase test
+	cases to test-userphrase.c
+
+2013-03-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* .travis.yml: Remove email notification for travis-ci
+
+2013-03-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Fix assertion failure in Visual Studio isspace() in Visual Studio only accepts 0 ~ 255. However, the char
+	in Visual Studio is signed char, thus it causes assertion failure
+	when calling isspace().  To prevent it, we must convert char to
+	unsigned char before calling isspace().
+
+2013-03-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/hash.c: Fix parameter of strncat
+
+2013-03-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* cmake/FindCurses.cmake: Add full license text in FindCurses.cmake
+
+2013-03-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, cmake/version.texi.in: Generate libchewing.info in
+	cmake
+
+2013-03-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, Makefile.am, cmake_chewing.pc.in =>
+	cmake/chewing.pc.in, include/cmake_config.h.in => cmake/config.h.in: 
+	Move cmake related *.in files to cmake directory
+
+2013-03-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, Makefile.am, cmake/FindCurses.cmake,
+	include/cmake_config.h.in: Build gen_keystroke in cmake
+
+2013-02-20  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Stop when tsi.src contains wrong phrase
+
+2013-02-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/phone.cin, data/tsi.src: Update phone.cin and tsi.src
+
+2013-03-02  Jim Huang <jserv@0xlab.org>
+
+	* Makefile.am: Deploy contrib directory in final release
+
+2013-02-28  Ding-Yi Chen <dingyichen@gmail.com>
+
+	* doc/libchewing.texi: Fixed #49 Added dircategory and direntry
+
+2013-02-28  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, test/Makefile.am, test/test-memory-fail.c: Use ld
+	to replace malloc/calloc for testing The original code uses dlsym with RTLD_NEXT to replace malloc/calloc
+	for testing. However, this implementation causes the following error
+	when using address sanitizer [1] in clang 3.2.  =================================================================
+	==2775== ERROR: AddressSanitizer: attempting free on address which
+	was not malloc()-ed: 0x000002b43040     #0 0x4b95e0
+	(/home/czchen/src/chewing/build-libchewing/test/test-memory-fail+0x4b95e0)    #1 0x40dda9
+	(/home/czchen/src/chewing/build-libchewing/test/test-memory-fail+0x40dda9)...  In order to prevent this error, we use --wrap option in ld to
+	replace malloc/calloc instead.  [1] https://code.google.com/p/address-sanitizer/
+
+2013-02-26  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Fix accessing invalid memory when line is empty
+
+2013-02-22  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/Makefile.am: Touch only $@ when gendata_stamp complete
+
+2013-02-19  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Add exception phrases
+
+2013-02-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Add exception word list
+
+2013-02-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Implement exception rule for 疊字
+
+2013-02-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Change sort error output format
+
+2013-02-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Remove phrase same frequency check
+
+2013-02-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Add exception phrases
+
+2013-02-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort.c: Add # comment for phone.cin and tsi.src
+
+2013-02-13  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c, test/testhelper.c: Add test case for CtrlNum
+
+2013-02-13  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test cases for Numlock
+
+2013-02-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c: Add test cases for CtrlNum, PageUp, PageDown
+
+2013-02-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c: Remove unused code
+
+2013-02-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c: Use ARRAY_SIZE
+
+2013-02-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* .gitignore: Update .gitignore
+
+2013-02-11  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h, src/chewingio.c,
+	src/chewingutil.c, src/choice.c: Add symbolic name for isSymbol
+
+2013-02-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* configure.ac: Remove maintainer mode To quote from automake manual [1]:     Several years ago François Pinard pointed out several arguments     against this AM_MAINTAINER_MODE macro. Most of them relate to     insecurity. By removing dependencies you get non-dependable
+	    builds: changes to sources files can have no effect on generated
+	    files and this can be very confusing when unnoticed. He adds that
+	    security shouldn't be reserved to maintainers (what
+	    --enable-maintainer-mode suggests), on the contrary. If one user has
+	    to modify a Makefile.am, then either Makefile.in should be updated
+	    or a warning should be output (this is what Automake uses missing
+	    for) but the last thing you want is that nothing happens and the
+	    user doesn't notice it (this is what happens when rebuild rules are
+	disabled by AM_MAINTAINER_MODE).  [1]
+
+	http://www.gnu.org/savannah-checkouts/gnu/automake/manual/html_node/maintainer_002dmode.html
+
+2013-02-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* : Merge for Windows platform
+
+2013-02-07  Ding-Yi Chen <dingyichen@gmail.com>
+
+	* data/tsi.src: Fixes #38
+
+2013-02-02  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/test-regression.c: Do not store user phrase
+	when its length is 1 chewing_handle_Enter() uses chewing_handle_CtrlNum() to store user
+	phrase.  However, instead of storing user phrase,
+	chewing_handle_CtrlNum() turns on select window when key is 0 or 1.
+	So Enter key might accidently turns on select window.  The problem is, chewing_handle_Enter() modifies chiSymbolCursor
+	before calling chewing_handle_CtrlNum(), while
+	chewing_handle_CtrlNum() needs correct chiSymbolCursor to turn on
+	select window. In this case, chiSymbolCursor might set to an invalid
+	value and crash the library eventually.  To prevent this, chewing_handle_Enter() will not call
+	chewing_handle_CtrlNum() when length of user phrase is less then 2.
+
+2013-01-31  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/test-regression.c: Check chiSymbolBufLen in
+	chewing_handle_Numlock() When starting select mode, libchewing will copy chiSymbolCursor to
+	oldChiSymbolCursor. The oldChiSymbolCursor will copy back to
+	chiSymbolCursor after finishing select mode. This action assumes
+	that chiSymbolBufLen never changes during select mode, or
+	chiSymbolCursor will out of bound and cause crash eventually.  The chiSymbolBufLen will change when it exceeds limitation.
+	Normally, it will not happen during select mode because select mode
+	does not increase chiSymbolBufLen. However, if the chiSymbolBufLen
+	already exceeds limitation before entering select mode, it will
+	change in select mode and libchewing might crash after restoring
+	chiSymbolBufLen to out of bound value.  This scenario happens when we use num lock to select symbol. Select
+	symbol increase chiSymbolBufLen and num lock does not check
+	chiSymbolBufLen after selecting. This cause chiSymbolBufLen out of
+	bound and next select mode will change the value of chiSymbolBufLen
+	and cause crash.
+
+2013-01-27  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingutil.c, src/choice.c: Add assert
+
+2013-01-27  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/testchewing.c, test/testhelper.c, test/testhelper.h: Add
+	type_single_keystroke() for testing
+
+2013-01-25  Kuang-che Wu <kcwu@csie.org>
+
+	* test/gen_keystroke.c: Fix compile error
+
+2013-01-25  Kuang-che Wu <kcwu@csie.org>
+
+	* data/Makefile.am: Avoid use gmake only syntax
+
+2013-01-23  Kuang-che Wu <kcwu@csie.org>
+
+	* test/gen_keystroke.c, test/randkeystroke.c, test/testchewing.c,
+	test/testhelper.c, test/testhelper.h: Make randkeystroke generate
+	more random keys
+
+2013-01-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/choice.c, test/test-regression.c: Set isSymbol to 0 in
+	SetChoiceInfo SetChoiceInfo updates the ChoiceInfo for word or phrase, thus it
+	needs to set isSymbol to 0 to ensure it will not goto symbol choose
+	in the following code.  See [1] for more information.  [1] http://code.google.com/p/chewing/issues/detail?id=472
+
+2013-01-21  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-bopomofo.c, test/test-config.c,
+	test/test-easy-symbol.c, test/test-fullshape.c,
+	test/test-regression.c, test/test-reset.c,
+	test/test-special-symbol.c, test/test-symbol.c, test/testhelper.c,
+	test/testhelper.h: Rename functions due to typo (keystoke ->
+	keystroke)
+
+2013-01-19  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, test/test-regression.c: Fix 'j', 'k' in select
+	mode cannot handle symbol selecting The original code uses ChoiceFirstAvail() when using 'j', 'k' in
+	select mode.  However, ChoiceFirstAvail() can only handle word and
+	phrase selectin. If encounting symbol selecting, ChoiceFirstAvail()
+	will fail to setup the selecting, and lib will crash eventually. See
+	[1].  [1] http://code.google.com/p/chewing/issues/detail?id=472
+
+2013-01-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/chewingio.c, src/chewingutil.c, src/choice.c: Add assert for
+	pci->nTotalChoice and pgdata->choiceInfo.nPage
+
+2013-01-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-regression.c: Rewrite test case for googlecode issue 472
+
+2013-01-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, configure.ac: Copy stresstest.py to binary tree
+	when using out of tree build
+
+2013-01-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Rewrite cmake rules for static data
+
+2013-01-18  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/stresstest.py: Add execute permission to stresstest.py
+
+2013-01-18  Kuang-che Wu <kcwu@csie.org>
+
+	* test/stresstest.py: Add script to run stress test
+
+2013-01-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* test/test-regression.c: Add regression test for googlecode issue
+	472
+
+2013-01-17  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/choice.c: Do not call GetCharNext() when GetCharFirst() fails Fix for googlecode issue 472 [1].  [1] http://code.google.com/p/chewing/issues/detail?id=472
+
+2013-01-15  Kuang-che Wu <kcwu@csie.org>
+
+	* test/randkeystroke.c: Fix number of zhuin keys in random keystroke
+	generator
+
+2013-01-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/hash.c: Do not modify hash when fopen fails
+
+2013-01-15  Kuang-che Wu <kcwu@csie.org>
+
+	* include/chewing.h: Fix typo
+
+2013-01-15  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Fix cmake in non Windows platform
+
+2013-01-14  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Include header files in cmake target
+
+2013-01-12  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/porting_layer/src/plat_path.c: Change Windows default data
+	search path to %WINDIR%\chewing
+
+2013-01-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Manual set output path for Visual Studio Visual Studio appends configuration (Debug, MinSizeRel, Release,
+	RelWithDebInfo) into output path, whith is not desirable because we
+	need to know output path for custom command.
+
+2013-01-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Build common as object library in cmake Set common as object library to create correct chewing.lib. If we do
+	not set common as object library, the chewing.lib will not contain
+	functions in common.lib, and linking to chewing.lib causes
+	unresolved external symbol error.  See [1] for detail information.  [1] http://stackoverflow.com/a/11448878/79816
+
+2013-01-09  Jim Huang <jserv@0xlab.org>
+
+	* data/tsi.src: data: Add '新北市' as requested
+
+2013-01-08  ChangZhuo Chen <czchen@gmail.com>
+
+	* Makefile.am: Fix `make release'
+
+2013-01-07  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Fix Visual Studio build in cmake
+
+2012-12-29  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, configure.ac, test/Makefile.am,
+	test/test-memory-fail.c: Add test for memory malloc fail handling The test-memory-fail.c implement fault injection for malloc() and
+	calloc() via RTLD_NEXT.
+
+2012-12-29  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Add Clang compiler options in cmake
+
+2012-12-30  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt, data/Makefile.am, src/tools/Makefile.am,
+	src/tools/sort.c, src/tools/sort_dic.c, src/tools/sort_word.c: Add
+	sort to replace sort_word and sort_dic The sort reads phone.cin and tsi.src as input, and generate the same
+	output as sort_word and sort_dic. However, because it reads both at
+	the same time, it can do more accuracy check then sort_word and
+	sort_dic.  The following checks are added in sort: - sort.c   - MAX_WORD_DATA not enough   - MAX_PHRASE_DATA not enough - phone.cin   - Duplicated word - tsi.src   - Duplicated phrase   - Two phrases have the same phone and frequency (show error
+	  message only) - format error   - bopomofo error   - phrase length and bopomofo length mismatch   - bopomofo in word of phrase is not found in phone.cin (show error
+	    message only)
+
+2012-12-30  ChangZhuo Chen <czchen@gmail.com>
+
+	* include/internal/chewing-private.h: Increase MAX_PHRASE_LEN to 11
+	for `金窩銀窩不如自己的狗窩'
+
+2012-12-30  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/tools/sort_dic.c: Increase num in RECORD for 0 terminated
+
+2012-12-30  ChangZhuo Chen <czchen@gmail.com>
+
+	* CMakeLists.txt: Fix cmake build when USE_BINARY_DATA=off
+
+2013-01-03  ChangZhuo Chen <czchen@gmail.com>
+
+	* Makefile.am: Fix `make release'
+
+2013-01-06  Jim Huang <jserv@0xlab.org>
+
+	* data/phone.cin, data/tsi.src: data: Fix Bopomofo representation of
+	'烴' Refer to 重編國語辭典修訂本 and Wikipedia
+
+2013-01-01  ChangZhuo Chen <czchen@gmail.com>
+
+	* src/porting_layer/include/plat_path.h: Fix wrong #ifdef
+
+2012-12-31  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Remove duplicated phrases
+
+2012-12-31  ChangZhuo Chen <czchen@gmail.com>
+
+	* data/tsi.src: Remove duplicated phrase `三輕'
+
+2012-12-31  Jim Huang <jserv@0xlab.org>
+
+	* CMakeLists.txt, Makefile.am: automake: Distribute CMake build
+	system
+
+2012-12-31  Jim Huang <jserv@0xlab.org>
+
+	* AUTHORS, README: AUTHORS: Add Wei-Hao Syu for his contributions
+	about THL and MPS2 Pinyin
+
+2012-12-31  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: post release development
+
+2012-12-31  Jim Huang <jserv@0xlab.org>
+
+	* NEWS: NEWS: finalize release 0.3.4
+
 2012-12-31  Jim Huang <jserv@0xlab.org>
 
 	* configure.ac: Bump version to 0.3.4
@@ -100,10 +983,10 @@
 2012-12-28  Jim Huang <jserv@0xlab.org>
 
 	* CMakeLists.txt, Makefile.am,
-	include/internal/hanyupinyin-private.h,
-	include/internal/pinyin-private.h, src/Makefile.am,
-	src/chewingio.c, src/hanyupinyin.c, src/pinyin.c, src/zuin.c: Rename
-	all occurrence of 'hanyupinyin' with 'pinyin' to be more generic We are going to merge THL-Pinyin (台灣華語羅馬拼音) and
+	include/internal/{hanyupinyin-private.h => pinyin-private.h},
+	src/Makefile.am, src/chewingio.c, src/{hanyupinyin.c => pinyin.c},
+	src/zuin.c: Rename all occurrence of 'hanyupinyin' with 'pinyin' to
+	be more generic We are going to merge THL-Pinyin (台灣華語羅馬拼音) and
 	MPS2-Pinyin (注音二式).  It should be better to make naming more
 	consistent.
 
@@ -252,8 +1135,8 @@
 	test/test-key2pho.c, test/test-keyboard.c, test/test-mmap.c,
 	test/test-path.c, test/test-regression.c, test/test-reset.c,
 	test/test-special-symbol.c, test/test-symbol.c, test/test-utf8.c,
-	test/test.c, test/test.h, test/testchewing.c, test/testhelper.c,
-	test/testhelper.h: Rename libtest to libtesthelper cmake uses `make test' to launch test suite, so we cannot have any
+	test/testchewing.c, test/{test.c => testhelper.c}, test/{test.h =>
+	testhelper.h}: Rename libtest to libtesthelper cmake uses `make test' to launch test suite, so we cannot have any
 	target named test.
 
 2012-12-18  ChangZhuo Chen <czchen@gmail.com>
@@ -701,7 +1584,7 @@
 
 	* .gitignore, doc/libchewing.texi, include/global.h,
 	src/chewingio.c, src/chewingutil.c, src/choice.c, test/Makefile.am,
-	test/test-config.c, test/test-default-config.c: Change default
+	test/{test-default-config.c => test-config.c}: Change default
 	candidate per page to 10
 
 2012-10-28  ChangZhuo Chen <czchen@gmail.com>

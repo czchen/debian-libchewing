@@ -51,8 +51,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = sort_word$(EXEEXT) sort_dic$(EXEEXT) \
-	maketree$(EXEEXT)
+noinst_PROGRAMS = sort$(EXEEXT) maketree$(EXEEXT)
 subdir = src/tools
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -73,14 +72,10 @@ maketree_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
-am_sort_dic_OBJECTS = sort_dic.$(OBJEXT) key2pho.$(OBJEXT) \
+am_sort_OBJECTS = sort.$(OBJEXT) key2pho.$(OBJEXT) \
 	chewing-utf8-util.$(OBJEXT)
-sort_dic_OBJECTS = $(am_sort_dic_OBJECTS)
-sort_dic_LDADD = $(LDADD)
-am_sort_word_OBJECTS = sort_word.$(OBJEXT) key2pho.$(OBJEXT) \
-	chewing-utf8-util.$(OBJEXT)
-sort_word_OBJECTS = $(am_sort_word_OBJECTS)
-sort_word_LDADD = $(LDADD)
+sort_OBJECTS = $(am_sort_OBJECTS)
+sort_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/include
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -107,9 +102,8 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(maketree_SOURCES) $(sort_dic_SOURCES) $(sort_word_SOURCES)
-DIST_SOURCES = $(maketree_SOURCES) $(sort_dic_SOURCES) \
-	$(sort_word_SOURCES)
+SOURCES = $(maketree_SOURCES) $(sort_SOURCES)
+DIST_SOURCES = $(maketree_SOURCES) $(sort_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -157,11 +151,10 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LIBCHEWING_AGE = @LIBCHEWING_AGE@
 LIBCHEWING_BINARY_VERSION = @LIBCHEWING_BINARY_VERSION@
-LIBCHEWING_CURRENT = @LIBCHEWING_CURRENT@
+LIBCHEWING_MAJOR = @LIBCHEWING_MAJOR@
+LIBCHEWING_MINOR = @LIBCHEWING_MINOR@
 LIBCHEWING_REVISION = @LIBCHEWING_REVISION@
-LIBDEBUG = @LIBDEBUG@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -169,7 +162,6 @@ LIBTOOL_EXPORT_OPTIONS = @LIBTOOL_EXPORT_OPTIONS@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
-MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
@@ -252,14 +244,8 @@ INCLUDES = \
 	-I$(top_srcdir)/src/porting_layer/include \
 	$(NULL)
 
-sort_word_SOURCES = \
-	sort_word.c \
-	$(top_builddir)/src/common/key2pho.c \
-	$(top_builddir)/src/common/chewing-utf8-util.c \
-	$(NULL)
-
-sort_dic_SOURCES = \
-	sort_dic.c \
+sort_SOURCES = \
+	sort.c \
 	$(top_builddir)/src/common/key2pho.c \
 	$(top_builddir)/src/common/chewing-utf8-util.c \
 	$(NULL)
@@ -269,7 +255,7 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -278,9 +264,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/tools/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/tools/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign src/tools/Makefile
+	  $(AUTOMAKE) --gnu src/tools/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -294,9 +280,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 
-$(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
+$(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
+$(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 
@@ -311,12 +297,9 @@ clean-noinstPROGRAMS:
 maketree$(EXEEXT): $(maketree_OBJECTS) $(maketree_DEPENDENCIES) $(EXTRA_maketree_DEPENDENCIES) 
 	@rm -f maketree$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(maketree_OBJECTS) $(maketree_LDADD) $(LIBS)
-sort_dic$(EXEEXT): $(sort_dic_OBJECTS) $(sort_dic_DEPENDENCIES) $(EXTRA_sort_dic_DEPENDENCIES) 
-	@rm -f sort_dic$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(sort_dic_OBJECTS) $(sort_dic_LDADD) $(LIBS)
-sort_word$(EXEEXT): $(sort_word_OBJECTS) $(sort_word_DEPENDENCIES) $(EXTRA_sort_word_DEPENDENCIES) 
-	@rm -f sort_word$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(sort_word_OBJECTS) $(sort_word_LDADD) $(LIBS)
+sort$(EXEEXT): $(sort_OBJECTS) $(sort_DEPENDENCIES) $(EXTRA_sort_DEPENDENCIES) 
+	@rm -f sort$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(sort_OBJECTS) $(sort_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -327,8 +310,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chewing-utf8-util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/key2pho.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/maketree.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sort_dic.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sort_word.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sort.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

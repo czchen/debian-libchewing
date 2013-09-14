@@ -3,8 +3,25 @@ AUTOMAKE_OPTIONS = foreign
 
 SUBDIRS = src/tools data src test doc
 
+CMAKE_FILES = \
+	cmake/chewing.pc.in \
+	cmake/config.h.in \
+	cmake/FindCurses.cmake \
+	cmake/version.texi.in \
+	CMakeLists.txt \
+	$(NULL)
+
+CONTRIB_FILES = \
+	contrib/python/test.py \
+	contrib/python/chewing.py \
+	contrib/simple-select.c \
+	contrib/Makefile-simple-select \
+	$(NULL)
+
 EXTRA_DIST = \
 	autogen.sh \
+	$(CMAKE_FILES) \
+	$(CONTRIB_FILES) \
 	$(NULL)
 
 pkgconfigdir = $(libdir)/pkgconfig
@@ -26,6 +43,7 @@ noinst_HEADERS =\
 	include/internal/choice-private.h \
 	include/internal/dict-private.h \
 	include/internal/global-private.h \
+	include/internal/memory-private.h \
 	include/internal/pinyin-private.h \
 	include/internal/hash-private.h \
 	include/internal/key2pho-private.h \

@@ -30,12 +30,14 @@ NATIVE_TESTS = \
 	test-fullshape \
 	test-key2pho \
 	test-keyboard \
+	test-logger \
 	test-mmap \
 	test-path \
 	test-reset \
 	test-regression \
 	test-symbol \
 	test-special-symbol \
+	test-userphrase \
 	test-utf8 \
 	$(NULL)
 
@@ -72,7 +74,6 @@ INCLUDES = \
 	$(NULL)
 
 LDADD = \
-	$(top_builddir)/src/libchewing.la \
 	$(top_builddir)/src/common/libcommon.la \
 	$(top_builddir)/src/porting_layer/src/libporting_layer.la \
 	$(top_builddir)/test/libtesthelper.la \
