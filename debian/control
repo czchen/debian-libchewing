@@ -18,6 +18,7 @@ Standards-Version: 3.9.4
 Homepage: http://chewing.im
 Vcs-Git: git://anonscm.debian.org/pkg-ime/libchewing.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-ime/libchewing.git;a=summary
+XS-Testsuite: autopkgtest
 
 Package: libchewing3-dev
 Conflicts: libchewing-dev, libchewing1-dev, libchewing2-dev

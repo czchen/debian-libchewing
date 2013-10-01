@@ -1,3 +1,13 @@
+libchewing (0.3.5-3) unstable; urgency=low
+
+  * Merge negative frequency patch (Closes: #722971)
+  * Fix hardening-no-fortify-functions
+  * Fix dh clean
+  * Add XS-Testsuite: autopkgtest
+  * Update watch
+
+ -- ChangZhuo Chen (陳昌倬) <czchen@gmail.com>  Tue, 01 Oct 2013 20:45:29 +0800
+
 libchewing (0.3.5-2) unstable; urgency=low
 
   * Add missing build dependency.
