@@ -1,3 +1,17 @@
+libchewing (0.3.5-4) unstable; urgency=medium
+
+  [ Martin Pitt ]
+  * debian/tests/control:
+    - Add missing pkg-config test dependency.
+    - Don't pull in all binaries, just libchewing3-dev. This ensures that the
+      -dev package has correct dependencies.
+
+  [ ChangZhuo Chen (陳昌倬) ]
+  * Merge ubuntu fix for autopkgtest (Closes: #735646)
+  * Update Standards-Version to 3.9.5
+
+ -- ChangZhuo Chen (陳昌倬) <czchen@gmail.com>  Tue, 18 Feb 2014 22:26:46 +0800
+
 libchewing (0.3.5-3) unstable; urgency=low
 
   * Merge negative frequency patch (Closes: #722971)

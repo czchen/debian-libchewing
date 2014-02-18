@@ -1,2 +1,2 @@
 Tests: build
-Depends: @, build-essential
+Depends: libchewing3-dev, build-essential, pkg-config
