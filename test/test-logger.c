@@ -9,9 +9,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#    include <config.h>
 #endif
 
+#include <assert.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,42 +20,40 @@
 #include "chewing.h"
 #include "testhelper.h"
 
-static const char *LOG_PATH = TEST_HASH_DIR "/logger.log";
+FILE *fd;
 
-void logger( void *data UNUSED, int level UNUSED, const char *fmt, ... )
+void test_set_null_logger()
 {
-	va_list ap;
-	FILE *fd = (FILE *) data;
+    ChewingContext *ctx;
 
-	va_start( ap, fmt );
-	vfprintf( fd, fmt, ap );
-	va_end( ap );
+    ctx = chewing_new();
+    start_testcase(ctx, fd);
+
+    chewing_set_logger(ctx, NULL, 0);
+    type_keystroke_by_string(ctx, "hk4g4");
+
+    chewing_delete(ctx);
 }
 
-void test_set_logger()
+int main(int argc, char *argv[])
 {
-	ChewingContext *ctx;
-	FILE *fd;
+    char *logname;
+    int ret;
 
-	ctx = chewing_new();
-	fd = fopen( LOG_PATH,  "w" );
+    putenv("CHEWING_PATH=" CHEWING_DATA_PREFIX);
+    putenv("CHEWING_USER_PATH=" TEST_HASH_DIR);
 
-	chewing_set_logger( ctx, logger, fd );
-	type_keystroke_by_string( ctx, "hk4g4" );
+    ret = asprintf(&logname, "%s.log", argv[0]);
+    if (ret == -1)
+        return -1;
+    fd = fopen(logname, "w");
+    assert(fd);
+    free(logname);
 
-	chewing_set_logger( ctx, NULL, 0 );
-	type_keystroke_by_string( ctx, "hk4g4" );
 
-	fclose( fd );
-	chewing_delete( ctx );
-}
+    test_set_null_logger();
 
-int main()
-{
-	putenv( "CHEWING_PATH=" CHEWING_DATA_PREFIX );
-	putenv( "CHEWING_USER_PATH=" TEST_HASH_DIR );
+    fclose(fd);
 
-	test_set_logger();
-
-	return exit_status();
+    return exit_status();
 }
