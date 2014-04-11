@@ -58,6 +58,12 @@
 /* Define to 1 if <ncurses.h> is present */
 #undef HAVE_NCURSES_H
 
+/* Define if you have POSIX threads libraries and header files. */
+#undef HAVE_PTHREAD
+
+/* Have PTHREAD_PRIO_INHERIT. */
+#undef HAVE_PTHREAD_PRIO_INHERIT
+
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
 
@@ -95,9 +101,6 @@
    */
 #undef LT_OBJDIR
 
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-#undef NO_MINUS_C_MINUS_O
-
 /* Name of package */
 #undef PACKAGE
 
@@ -119,6 +122,10 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* Define to necessary symbol if this constant uses a non-standard name on
+   your system. */
+#undef PTHREAD_CREATE_JOINABLE
+
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
@@ -128,11 +135,11 @@
 /* Runtime is under Win32 environment */
 #undef UNDER_WINDOWS
 
-/* Experimental use of binary data */
-#undef USE_BINARY_DATA
-
 /* Version number of package */
 #undef VERSION
+
+/* Use sqlite3 to store userphrase */
+#undef WITH_SQLITE3
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
