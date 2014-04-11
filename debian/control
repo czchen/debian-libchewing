@@ -11,6 +11,7 @@ Build-Depends: autotools-dev,
                dh-autoreconf,
                gcc (>= 3:3.3),
                libncursesw5-dev,
+               libsqlite3-dev,
                libtool (>= 1.5.6),
                pkg-config,
                texinfo
@@ -42,7 +43,7 @@ Provides: libchewing
 Multi-Arch: same
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libchewing3-data (= ${binary:Version}),
+Depends: libchewing3-data (>= 0.4.0),
          ${misc:Depends},
          ${shlibs:Depends}
 Breaks: scim-chewing (<< 0.3.3)
@@ -62,8 +63,8 @@ Package: libchewing3-data
 Provides: libchewing-data
 Breaks: libchewing-data (<= 0.2.7)
 Section: misc
-Multi-Arch: same
-Architecture: any
+Multi-Arch: foreign
+Architecture: all
 Depends: ${misc:Depends}
 Description: intelligent phonetic input method library - data files
  libchewing is an intelligent phonetic input method library for Chinese.

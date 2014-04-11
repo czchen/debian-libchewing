@@ -3,7 +3,7 @@
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 override_dh_auto_configure:
-	dh_auto_configure -- --datadir=/usr/lib/${DEB_HOST_MULTIARCH}/libchewing3/ --disable-silent-rules
+	dh_auto_configure -- --disable-silent-rules
 
 override_dh_strip:
 	dh_strip --dbg-package=libchewing3-dbg
