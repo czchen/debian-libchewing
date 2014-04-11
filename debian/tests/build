@@ -5,13 +5,24 @@ WORKDIR=`mktemp -d`
 trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
 cd $WORKDIR
 cat <<EOF >buildtest.c
+#include <stdarg.h>
 #include <stdio.h>
+
 #include <chewing.h>
+
+void logger(void *data, int level, const char *fmt, ...)
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+    vprintf(fmt, ap);
+    va_end(ap);
+}
 
 int main()
 {
     ChewingContext *ctx;
-    ctx = chewing_new();
+    ctx = chewing_new2(NULL, NULL, logger, NULL);
     if (!ctx) {
         fprintf(stderr, "chewing_new() fails.\n");
         return -1;
