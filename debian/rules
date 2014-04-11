@@ -12,6 +12,7 @@ override_dh_clean:
 	-rm doc/libchewing.info
 	-rm doc/stamp-vti
 	-rm doc/version.texi
+	-rm Makefile.in
 	dh_clean
 
 %:
