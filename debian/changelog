@@ -1,3 +1,20 @@
+libchewing (0.4.0-1) unstable; urgency=medium
+
+  * New upstream release
+  * Add --disable-silent-rules for compiler-flags-hidden
+  * Drop upstream merged patch debian/patches/negative-frequency.patch
+  * Modify for libchewing new platform independent format
+    - Remove --datadir in rules
+    - Change libchewing3-data arch to all
+    - Update debian/libchewing3-data.install
+  * Enable testing
+  * Update debian/tests/build for better debug message
+  * Remove Makefile.in in dh_clean
+  * Update debian/libchewing3.symbols for new symbols
+  * Update debian/copyright to copyright-format 1.0
+
+ -- ChangZhuo Chen (陳昌倬) <czchen@gmail.com>  Fri, 11 Apr 2014 13:17:07 +0800
+
 libchewing (0.3.5-4) unstable; urgency=medium
 
   [ Martin Pitt ]
