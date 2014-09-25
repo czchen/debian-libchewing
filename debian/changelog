@@ -1,3 +1,18 @@
+libchewing (0.4.0-2) unstable; urgency=medium
+
+  * Bump standard version to 3.9.6
+  * Fix invalid-short-name-in-dep5-copyright
+  * Update debian/rules
+    - Install include into /usr/include/triplet
+    - Don't use --disable-silent-rules
+    - Add --fail-missing in dh_install
+  * Tweak debian/control
+  * Use debian/clean to remove generated files
+  * Remove libchewing.a in libchewing3-dev
+  * Add debian/gbp.conf
+
+ -- ChangZhuo Chen (陳昌倬) <czchen@gmail.com>  Thu, 25 Sep 2014 23:00:56 +0800
+
 libchewing (0.4.0-1) unstable; urgency=medium
 
   * New upstream release
