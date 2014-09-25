@@ -15,7 +15,7 @@ Build-Depends: autotools-dev,
                libtool (>= 1.5.6),
                pkg-config,
                texinfo,
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://chewing.im
 Vcs-Git: git://anonscm.debian.org/pkg-ime/libchewing.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-ime/libchewing.git;a=summary
